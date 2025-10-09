@@ -57,11 +57,19 @@ const Login = () => {
           defaultValue="student"
           className=" mx-auto mb-2  flex items-center "
         >
-          <TabsList className="cursor-pointer">
-            <TabsTrigger disabled={identifierPresent} value="student">
+          <TabsList>
+            <TabsTrigger
+              disabled={identifierPresent}
+              className="cursor-pointer"
+              value="student"
+            >
               Student
             </TabsTrigger>
-            <TabsTrigger disabled={identifierPresent} value="faculty">
+            <TabsTrigger
+              disabled={identifierPresent}
+              className="cursor-pointer"
+              value="faculty"
+            >
               Faculty
             </TabsTrigger>
           </TabsList>
@@ -178,7 +186,7 @@ const Login = () => {
                       Authenticate
                     </Button>
                   )}
-                  <CardFooter className="flex justify-center text-sm text-muted-foreground">
+                  <CardFooter className="flex flex-col justify-center text-sm text-muted-foreground">
                     <p>
                       Don’t have an account?{" "}
                       <a
@@ -188,6 +196,12 @@ const Login = () => {
                         Sign up
                       </a>
                     </p>
+                    <a
+                      href="forgot_password"
+                      className="text-blue-800/70 hover:underline "
+                    >
+                      Forgot password?
+                    </a>
                   </CardFooter>
                 </CardContent>
               </div>
