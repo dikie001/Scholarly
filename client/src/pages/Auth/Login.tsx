@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 
 const Login = () => {
@@ -14,15 +15,22 @@ const Login = () => {
 
   const HandleAuthentication = () => {
     setAdmissionNumberExist(true);
+      <Alert variant="destructive">
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>Something went wrong.</AlertDescription>
+      </Alert>;
   };
   return (
     <div className="h-screen w-full flex justify-center items-center  sm:p-6">
+      
       <div className="border relative max-w-2xl w-full p-6 py-24 rounded-xl">
         <div
           className="h-12 bg-gradient-to-l from-blue-600 to-blue-400 text-center px-4 left-1/2 -translate-x-1/2  flex py-2 rounded-t-xl absolute top-0 max-w-2xl w-full 
         "
         >
-          <p className="text-sm absolute right-6 top-3.5 text-white font-medium">version 1.0.0</p>
+          <p className="text-sm absolute right-6 top-3.5 text-white font-medium">
+            version 1.0.0
+          </p>
         </div>
         <Card className="w-full max-w-xl shadow-lg p-4 mx-auto">
           <CardTitle className="text-4xl sm:text-5xl flex items-center mx-auto font-bold text-blue-600 max-sm:-mb-2">
@@ -103,7 +111,7 @@ const Login = () => {
                   <p>
                     Don’t have an account?{" "}
                     <a
-                      href="#"
+                      href="signup"
                       className="text-blue-800 font-medium hover:underline"
                     >
                       Sign up
