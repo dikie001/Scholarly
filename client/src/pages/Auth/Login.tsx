@@ -7,32 +7,48 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { APP_VERSION } from "@/utils/constants";
 import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Login = () => {
   const [admissionNumberExist, setAdmissionNumberExist] = useState(false);
+  // const [userDetails, setUserDetails]=useState<>({
+  //   a: "",
+  //   password: "",
+
+  // })
 
   const HandleAuthentication = () => {
     setAdmissionNumberExist(true);
-      <Alert variant="destructive">
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>Something went wrong.</AlertDescription>
-      </Alert>;
   };
   return (
     <div className="h-screen w-full flex justify-center items-center  sm:p-6">
-      
+      {/* Login Card */}
+
       <div className="border relative max-w-2xl w-full p-6 py-24 rounded-xl">
         <div
           className="h-12 bg-gradient-to-l from-blue-600 to-blue-400 text-center px-4 left-1/2 -translate-x-1/2  flex py-2 rounded-t-xl absolute top-0 max-w-2xl w-full 
         "
         >
           <p className="text-sm absolute right-6 top-3.5 text-white font-medium">
-            version 1.0.0
+            {APP_VERSION}{" "}
           </p>
         </div>
-        <Card className="w-full max-w-xl shadow-lg p-4 mx-auto">
+
+        {/* Coice tabs, student or faculty */}
+        <Tabs defaultValue="student" className="w-[400px] mx-auto mb-2 flex items-center ">
+          <TabsList>
+            <TabsTrigger value="student">Student</TabsTrigger>
+            <TabsTrigger value="faculty">Faculty</TabsTrigger>
+          </TabsList>
+          {/* <TabsContent value="account">
+            Make changes to your account here.
+          </TabsContent>
+          <TabsContent value="password">Change your password here.</TabsContent> */}
+        </Tabs>
+        {/* Main card */}
+        <Card className="w-full max-w-xl shadow-lg  p-4 mx-auto">
           <CardTitle className="text-4xl sm:text-5xl flex items-center mx-auto font-bold text-blue-600 max-sm:-mb-2">
             Scholarly <sup className="text-xs ">TM</sup>
           </CardTitle>
@@ -73,14 +89,15 @@ const Login = () => {
                 className="sm:hidden mx-auto mb-2"
                 alt="padlock"
               />
-              <CardHeader className="text-center"></CardHeader>
+              {/* INputs */}
               <CardContent className="space-y-4  border-2  rounded-xl p-4">
                 <div>
-                  <label htmlFor="email" className="text-sm font-medium">
+                  <label htmlFor="amd_number" className="text-sm font-medium">
                     Admission number
                   </label>
                   <Input
-                    id="number"
+                    id="adm_number"
+                    name="admissionNumber"
                     type="number"
                     placeholder="14572"
                     className="mt-1"
@@ -95,12 +112,14 @@ const Login = () => {
                     <Input
                       id="password"
                       type="password"
+                      name="password"
                       placeholder="••••••••"
                       className="mt-1"
                     />
                   </div>
                 )}
 
+                {/* Login button */}
                 <Button
                   onClick={HandleAuthentication}
                   className="w-full bg-gradient-to-l from-blue-600 to-blue-400  max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
