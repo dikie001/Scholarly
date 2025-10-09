@@ -5,7 +5,7 @@ import {Toaster} from "sonner"
 const App = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
-      <Toaster/>
+      <Toaster richColors/>
       <AppRoutes/>
       <main>
         {children}
