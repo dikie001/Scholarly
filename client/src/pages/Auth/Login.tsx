@@ -75,12 +75,12 @@ const Login = () => {
           </TabsList>
 
           {/* Main card */}
-          <Card className="w-full max-w-xl shadow-lg  p-4 mx-auto">
+          <Card className="w-full max-w-2xl shadow-lg  p-4 mx-auto">
             <CardTitle className="text-4xl sm:text-5xl flex items-center mx-auto font-bold text-blue-600 max-sm:-mb-2">
               Scholarly <sup className="text-xs ">TM</sup>
             </CardTitle>
             <div className="flex sm:justify-between gap-4">
-              <div className="max-sm:hidden">
+              <div className="max-sm:hidden ">
                 {/* Instrucations for students and faculty */}
                 <div className="mt-2">
                   <p>
@@ -109,7 +109,7 @@ const Login = () => {
 
                 {/* Padlock image */}
                 <div className="mt-4">
-                  <img src="/images/padlock.png" width={100} alt="" />
+                  <img src="/images/padlock.png" width={100} alt="padlock" />
                 </div>
               </div>
               <div className="max-w-sm max-sm:mx-auto ">
@@ -119,8 +119,8 @@ const Login = () => {
                   className="sm:hidden mx-auto mb-2"
                   alt="padlock"
                 />
-                {/* INputs */}
-                <CardContent className="space-y-4  border-2  rounded-xl p-4">
+                {/* INput form */}
+                <CardContent className="space-y-4  border-2 max-w-md w-full rounded-xl p-4">
                   <div>
                     <label htmlFor="identifier" className="text-sm font-medium">
                       <TabsContent value="student">

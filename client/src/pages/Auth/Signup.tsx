@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import React, { useState } from "react";
 import type { accountTypes, userTypes } from "@/types/auth";
+import { APP_VERSION } from "@/utils/constants";
+import { toast } from "sonner";
 
 const Signup = () => {
   const [accountType, setAccountType] = useState<accountTypes>("");
@@ -40,12 +42,18 @@ const Signup = () => {
     setAccountType(params);
     setUser((prev) => ({ ...prev, accountType: params }));
   };
+
+  // Handle signup
+  const HandleSignup = () => {
+    console.log(user);
+    toast.success("Account created successfuly");
+  };
   return (
     <div className="min-h-screen w-full flex justify-center items-center sm:p-6 ">
       <div className="border relative max-w-2xl w-full p-6 py-24 rounded-xl">
         <div className="h-12 bg-gradient-to-l from-blue-600 to-blue-400 text-center px-4 left-1/2 -translate-x-1/2 flex py-2 rounded-t-xl absolute top-0 max-w-2xl w-full">
           <p className="text-sm absolute right-6 top-3.5 text-white font-medium">
-            version 1.0.0
+            {APP_VERSION}
           </p>
         </div>
         <Card className="w-full max-w-xl shadow-lg p-4 mx-auto">
@@ -63,7 +71,7 @@ const Signup = () => {
                 </a>
               </div>
               <div className="mt-4">
-                <img src="/images/padlock.png" width={100} alt="padlock" />
+                <img src="/images/shield.png" width={100} alt="padlock" />
               </div>
             </div>
             <div className="max-w-sm max-sm:mx-auto">
@@ -117,6 +125,7 @@ const Signup = () => {
                   />
                 </div>
 
+                {/* Email */}
                 {accountType === "faculty" && (
                   <div>
                     <label htmlFor="email" className="text-sm font-medium">
@@ -172,6 +181,7 @@ const Signup = () => {
                     />
                   </div>
                 )}
+                {/* Password */}
                 <div>
                   <label htmlFor="password" className="text-sm font-medium">
                     Password
@@ -185,6 +195,7 @@ const Signup = () => {
                     className="mt-1"
                   />
                 </div>
+                {/* Coonfirm passsword */}
                 <div>
                   <label
                     htmlFor="confirmPassword"
@@ -199,7 +210,11 @@ const Signup = () => {
                     className="mt-1"
                   />
                 </div>
-                <Button className="w-full bg-gradient-to-l from-blue-600 to-blue-400 max-w-xs mx-auto flex max-sm:w-60 sm:w-50">
+                {/* Sign up btn */}
+                <Button
+                  onClick={HandleSignup}
+                  className="w-full mt-6 cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400 max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
+                >
                   Sign Up
                 </Button>
                 <CardFooter className="flex justify-center text-sm text-muted-foreground">
