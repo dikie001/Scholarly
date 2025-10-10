@@ -21,7 +21,7 @@ const user: typeof usersTable.$inferInsert = {
 app.get("/", async (req, res) => {
   console.log("Server is live...");
   const allUsers = await db.insert(usersTable).values(user);
-  console.log(allUsers);
+  console.log("user created",allUsers);
 });
 
 app.listen(PORT, () => {
