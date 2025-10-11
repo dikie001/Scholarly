@@ -75,7 +75,7 @@ const Login = () => {
           </TabsList>
 
           {/* Main card */}
-          <Card className="w-full max-w-2xl shadow-lg  p-4 mx-auto">
+          <Card className="w-full max-w-2xl shadow-lg  p-2 md:p-4 mx-auto">
             <CardTitle className="text-4xl sm:text-5xl flex items-center mx-auto font-bold text-blue-600 max-sm:-mb-2">
               Scholarly <sup className="text-xs ">TM</sup>
             </CardTitle>
@@ -120,7 +120,7 @@ const Login = () => {
                   alt="padlock"
                 />
                 {/* INput form */}
-                <CardContent className="space-y-4  border-2 max-w-md w-full rounded-xl p-4">
+                <CardContent className="space-y-4  border-2 max-w-md  min-w-80 rounded-xl p-4">
                   <div>
                     <label htmlFor="identifier" className="text-sm font-medium">
                       <TabsContent value="student">
