@@ -19,6 +19,7 @@ import React, { useState } from "react";
 import type { accountTypes, userTypes } from "@/types/auth";
 import { APP_VERSION } from "@/utils/constants";
 import { toast } from "sonner";
+import axios from "axios";
 
 const Signup = () => {
   const [accountType, setAccountType] = useState<accountTypes>("");
@@ -45,6 +46,13 @@ const Signup = () => {
 
   // Handle signup
   const HandleSignup = () => {
+    axios
+      .post("/api/auth/register", user)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+
     console.log(user);
     toast.success("Account created successfuly");
   };
@@ -56,7 +64,7 @@ const Signup = () => {
             {APP_VERSION}
           </p>
         </div>
-        <Card className="w-full max-w-xl shadow-lg p-4 mx-auto">
+        <Card className="w-full max-w-xl shadow-lg p-2 py-6 md:p-4 mx-auto">
           <CardTitle className="text-4xl sm:text-5xl flex items-center mx-auto font-bold text-blue-600 max-sm:-mb-2">
             Scholarly <sup className="text-xs">TM</sup>
           </CardTitle>{" "}
