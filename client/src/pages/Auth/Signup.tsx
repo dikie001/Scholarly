@@ -21,6 +21,7 @@ import type {
   zodIssuesTypes,
 } from "@/types/auth.types";
 import { APP_VERSION } from "@/utils/constants";
+import { findPath, getError } from "@/utils/validators";
 import { facultySchema, parentSchema, studentSchema } from "@/zod/auth.schema";
 import axios from "axios";
 import React, { useState } from "react";
@@ -34,7 +35,7 @@ const Signup = () => {
     email: "",
     password: "",
     admissionNumber: 0,
-    phoneNumber: "",
+    phoneNumber: 0,
     accountType: "",
     role: "",
   });
@@ -75,7 +76,7 @@ const Signup = () => {
 
       // Map the issues array to error states
       const errArray = issuesArray.map((issue) => ({
-        path: issue.path.join(''),
+        path: issue.path.join(""),
         message: issue.message,
       }));
       setError(errArray);
@@ -162,12 +163,6 @@ const Signup = () => {
 
                 {/* Full name */}
                 <div>
-                  {error.find((e)=>e.path === "fullName") && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {error.find((e)=>e.path === "fullName")?.message}
-                          </p>
-
-                  )}
                   <label htmlFor="fullName" className="text-sm font-medium">
                     Full Name
                   </label>
@@ -179,6 +174,11 @@ const Signup = () => {
                     placeholder="John doe"
                     className="mt-1"
                   />
+                  {findPath("fullName", error) && (
+                    <p className="text-red-500  text-xs mt-1">
+                      {getError("fullName", error)}
+                    </p>
+                  )}
                 </div>
 
                 {/* Email */}
@@ -194,7 +194,12 @@ const Signup = () => {
                       name="email"
                       placeholder="john.doe@example.com"
                       className="mt-1"
-                    />
+                    />{" "}
+                    {findPath("email", error) && (
+                      <p className="text-red-500  text-xs mt-1">
+                        {getError("email", error)}
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -215,6 +220,11 @@ const Signup = () => {
                       placeholder="14572"
                       className="mt-1"
                     />
+                    {findPath("admissionNumber", error) && (
+                      <p className="text-red-500  text-xs mt-1">
+                        {getError("admissionNumber", error)}
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -235,6 +245,11 @@ const Signup = () => {
                       placeholder="0716952782"
                       className="mt-1"
                     />
+                    {findPath("phoneNumber", error) && (
+                      <p className="text-red-500  text-xs mt-1">
+                        {getError("phoneNumber", error)}
+                      </p>
+                    )}
                   </div>
                 )}
                 {/* Password */}

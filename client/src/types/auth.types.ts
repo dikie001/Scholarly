@@ -8,7 +8,7 @@ export type userTypes = {
   accountType: accountTypes;
   admissionNumber?: number;
   password: string;
-  phoneNumber: string;
+  phoneNumber: number;
   role: string;
 };
 
