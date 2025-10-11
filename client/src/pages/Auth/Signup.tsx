@@ -6,7 +6,6 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,11 +14,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React, { useState } from "react";
-import type { accountTypes, userTypes } from "@/types/auth";
+import { Input } from "@/components/ui/input";
+import type {
+  accountTypes,
+  userTypes,
+  zodIssuesTypes,
+} from "@/types/auth.types";
 import { APP_VERSION } from "@/utils/constants";
-import { toast } from "sonner";
+import { facultySchema, parentSchema, studentSchema } from "@/zod/auth.schema";
 import axios from "axios";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import { email } from "zod";
 
 const Signup = () => {
   const [accountType, setAccountType] = useState<accountTypes>("");
@@ -27,10 +33,15 @@ const Signup = () => {
     fullName: "",
     email: "",
     password: "",
-    admissionNumber: "",
+    admissionNumber: 0,
     phoneNumber: "",
     accountType: "",
+    role: "",
   });
+
+  // MAKE SURE TO REMOVE THIS ANY
+  const [error, setError] = useState<zodIssuesTypes[]>([]);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // Handle user info, update the object
   const HandleUser = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,30 +52,61 @@ const Signup = () => {
   // Handle account type selection
   const HandleAccountType = (params: accountTypes) => {
     setAccountType(params);
-    setUser((prev) => ({ ...prev, accountType: params }));
+    setUser((prev) => ({ ...prev, role: params }));
   };
 
   // Handle signup
   const HandleSignup = () => {
-    axios
-      .post("/api/auth/register", user)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    // Check if role is selected
+    if (user.role.trim() === "") {
+      return toast.error("Select account type!");
+    }
+    // Validate data
+    const schema =
+      user.role === "student"
+        ? studentSchema
+        : user.role === "parent"
+        ? parentSchema
+        : facultySchema;
+    const result = schema.safeParse(user);
+    if (!result.success) {
+      console.log(result.error.issues);
+      const issuesArray = result.error.issues;
 
-    console.log(user);
-    toast.success("Account created successfuly");
+      // Map the issues array to error states
+      const errArray = issuesArray.map((issue) => ({
+        path: issue.path.join(''),
+        message: issue.message,
+      }));
+      setError(errArray);
+      console.log("error-arr", errArray);
+
+      return;
+    } else {
+      console.log(result);
+    }
+    axios
+      .post("http://localhost:4500/api/auth/register", user)
+      .then((res) => {
+        console.log(res.data.error);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response?.data?.error === "Admission number exists") {
+          toast.error("The admission number exists!");
+        }
+      });
   };
   return (
     <div className="min-h-screen w-full flex justify-center items-center sm:p-6 ">
-      <div className="border relative max-w-2xl w-full p-6 py-24 rounded-xl">
+      {/* <Toaster richColors position="top-right"/> */}
+      <div className="border relative max-w-2xl w-full p-4 py-24 rounded-xl">
         <div className="h-12 bg-gradient-to-l from-blue-600 to-blue-400 text-center px-4 left-1/2 -translate-x-1/2 flex py-2 rounded-t-xl absolute top-0 max-w-2xl w-full">
           <p className="text-sm absolute right-6 top-3.5 text-white font-medium">
             {APP_VERSION}
           </p>
         </div>
-        <Card className="w-full max-w-xl shadow-lg p-2 py-6 md:p-4 mx-auto">
+        <Card className="w-full max-w-xl shadow-lg p-3 py-6 md:p-4 mx-auto">
           <CardTitle className="text-4xl sm:text-5xl flex items-center mx-auto font-bold text-blue-600 max-sm:-mb-2">
             Scholarly <sup className="text-xs">TM</sup>
           </CardTitle>{" "}
@@ -120,6 +162,12 @@ const Signup = () => {
 
                 {/* Full name */}
                 <div>
+                  {error.find((e)=>e.path === "fullName") && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {error.find((e)=>e.path === "fullName")?.message}
+                          </p>
+
+                  )}
                   <label htmlFor="fullName" className="text-sm font-medium">
                     Full Name
                   </label>
@@ -203,6 +251,7 @@ const Signup = () => {
                     className="mt-1"
                   />
                 </div>
+
                 {/* Coonfirm passsword */}
                 <div>
                   <label
@@ -213,11 +262,14 @@ const Signup = () => {
                   </label>
                   <Input
                     id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     type="password"
                     placeholder="••••••••"
                     className="mt-1"
                   />
                 </div>
+
                 {/* Sign up btn */}
                 <Button
                   onClick={HandleSignup}
@@ -225,6 +277,7 @@ const Signup = () => {
                 >
                   Sign Up
                 </Button>
+
                 <CardFooter className="flex justify-center text-sm text-muted-foreground">
                   <p>
                     Already have an account?{" "}

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { credentialsTypes } from "@/types/auth";
+import type { credentialsTypes } from "@/types/auth.types";
 import { APP_VERSION } from "@/utils/constants";
 import { useState } from "react";
 import { toast } from "sonner";
