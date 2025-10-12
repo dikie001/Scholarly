@@ -4,6 +4,7 @@ import Signup from "@/pages/Auth/Signup";
 import AdminDashboard from "@/pages/Dashboards/adminDashboard/adminDashboard";
 import FacultyDashboard from "@/pages/Dashboards/facultyDashboard/facultyDashboard";
 import ParentDashboard from "@/pages/Dashboards/parentDashboard/parentDashboard";
+import PrincipalDashboard from "@/pages/Dashboards/principalDashboard.tsx/Dashboard";
 import StudentDashboard from "@/pages/Dashboards/studentDashboard/Dashboard";
 import { Route, Routes } from "react-router-dom";
 const AppRoutes = () => {
@@ -15,6 +16,7 @@ const AppRoutes = () => {
       <Route path="/faculty_dashboard" element={<FacultyDashboard />} />
       <Route path="/parent_dashboard" element={<ParentDashboard />} />
       <Route path="/admin_dashboard" element={<AdminDashboard />} />
+      <Route path="/principal_dashboard" element={<PrincipalDashboard />} />
     </Routes>
   );
 }
