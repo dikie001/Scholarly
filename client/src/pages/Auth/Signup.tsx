@@ -21,12 +21,17 @@ import type {
   zodIssuesTypes,
 } from "@/types/auth.types";
 import { APP_VERSION } from "@/utils/constants";
-import { findPath, getError } from "@/utils/validators";
+import {
+  findPath,
+  getError,
+  parseError,
+  parseResponse,
+} from "@/utils/validators";
 import { facultySchema, parentSchema, studentSchema } from "@/zod/auth.schema";
 import axios from "axios";
+import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import { email } from "zod";
 
 const Signup = () => {
   const [accountType, setAccountType] = useState<accountTypes>("");
@@ -34,11 +39,14 @@ const Signup = () => {
     fullName: "",
     email: "",
     password: "",
-    admissionNumber: 0,
+    admissionNumber: null,
     phoneNumber: 0,
     accountType: "",
     role: "",
   });
+  const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // MAKE SURE TO REMOVE THIS ANY
   const [error, setError] = useState<zodIssuesTypes[]>([]);
@@ -58,10 +66,16 @@ const Signup = () => {
 
   // Handle signup
   const HandleSignup = () => {
+    // Clear error messages if available
+    if (passwordError) setPasswordError("");
     // Check if role is selected
     if (user.role.trim() === "") {
       return toast.error("Select account type!");
     }
+    // Check if password is same as  confirm password
+    const isValidPassword = user.password === confirmPassword;
+    if (!isValidPassword) return setPasswordError("Password do not match!");
+
     // Validate data
     const schema =
       user.role === "student"
@@ -81,22 +95,28 @@ const Signup = () => {
       }));
       setError(errArray);
       console.log("error-arr", errArray);
-
       return;
     } else {
       console.log(result);
     }
-    axios
-      .post("http://localhost:4500/api/auth/register", user)
-      .then((res) => {
-        console.log(res.data.error);
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response?.data?.error === "Admission number exists") {
-          toast.error("The admission number exists!");
-        }
-      });
+    try {
+      setLoading(true);
+      axios
+        .post("http://localhost:4500/api/auth/register", user)
+        .then((res) => {
+          // parse response
+          parseResponse(res);
+        })
+        .catch((err) => {
+          
+          // Parse error
+          parseError(err);
+        });
+    } catch (err) {
+      console.log("Axios error", err);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="min-h-screen w-full flex justify-center items-center sm:p-6 ">
@@ -253,7 +273,7 @@ const Signup = () => {
                   </div>
                 )}
                 {/* Password */}
-                <div>
+                <div className="relative">
                   <label htmlFor="password" className="text-sm font-medium">
                     Password
                   </label>
@@ -261,14 +281,32 @@ const Signup = () => {
                     id="password"
                     name="password"
                     onChange={(e) => HandleUser(e)}
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     className="mt-1"
                   />
+                  {/* Password error */}
+                  {findPath("password", error) && (
+                    <p className="text-red-500  text-xs mt-1">
+                      {getError("password", error)}
+                    </p>
+                  )}
+                  {/* show password toggle */}
+                  <div
+                    onClick={() => {
+                      if (user.password.trim() === "") {
+                        return toast.info("Enter password first");
+                      }
+                      setShowPassword(!showPassword);
+                    }}
+                    className="absolute text-gray-500 cursor-pointer top-9 right-4"
+                  >
+                    {showPassword ? <Eye size={16} /> : <EyeOff size={14} />}
+                  </div>
                 </div>
 
                 {/* Coonfirm passsword */}
-                <div>
+                <div className="relative">
                   <label
                     htmlFor="confirmPassword"
                     className="text-sm font-medium"
@@ -279,18 +317,37 @@ const Signup = () => {
                     id="confirmPassword"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     className="mt-1"
                   />
+                  {/* show password toggle */}
+                  <div
+                    onClick={() => {
+                      if (confirmPassword.trim() === "") {
+                        return toast.info("Enter password first");
+                      }
+                      setShowPassword(!showPassword);
+                    }}
+                    className="absolute text-gray-500 cursor-pointer top-9 right-4"
+                  >
+                    {showPassword ? <Eye size={16} /> : <EyeOff size={14} />}
+                  </div>
+                  {passwordError && (
+                    <p className="text-red-500  text-xs mt-1">
+                      {passwordError}
+                    </p>
+                  )}
                 </div>
 
                 {/* Sign up btn */}
+
                 <Button
                   onClick={HandleSignup}
-                  className="w-full mt-6 cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400 max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
+                  className="w-full mt-6 hover:scale-102 duration-200 active:scale-90 cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400 max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
                 >
-                  Sign Up
+                  {loading && <LoaderCircle className="animate-spin" />}
+                  {loading ? "Creating account..." : "Create account"}
                 </Button>
 
                 <CardFooter className="flex justify-center text-sm text-muted-foreground">

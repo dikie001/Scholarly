@@ -6,7 +6,7 @@ export type userTypes = {
   fullName: string;
   email: string;
   accountType: accountTypes;
-  admissionNumber?: number;
+  admissionNumber: number | null;
   password: string;
   phoneNumber: number;
   role: string;
