@@ -107,18 +107,23 @@ export const authenticateStudent = async (req: Request, res: Response) => {
         admissionNumber: identifier,
       });
       if (!studentRecord)
-        return res.status(400).json({ message: "ran into an error" });
+        return res.status(400).json({ message: "record not found!" });
 
+      // Compare password with hashed pass in db
       const isPasswordValid = await comparePassword(
         password,
         studentRecord?.password
       );
+
+      console.log('validity',isPasswordValid)
       if (!isPasswordValid)
         return res.status(400).json({ message: "wrong password" });
-      if(isPasswordValid) res.json(200).json({message:'correct password', studentRecord})
+
+      if (isPasswordValid)
+        res.json(200).json({ message: "correct password", studentRecord });
       console.log(isPasswordValid);
     } catch (err) {
-      console.log("error from auth.controller.studentlogin");
+      console.log("error from auth.controller.studentlogin:",err);
     }
   }
 };

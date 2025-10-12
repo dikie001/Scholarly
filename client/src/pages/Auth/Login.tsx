@@ -37,11 +37,11 @@ const Login = () => {
         .post("http://localhost:4500/api/auth/login", credentials)
         .then((res) => {
           console.log(res);
-          if(res.data?.message === "student exists"){
-          setIdentifierPresent(true);
-          }else if(res.data?.message === "not found"){
+          if (res.data?.message === "student exists") {
+            setIdentifierPresent(true);
+          } else if (res.data?.message === "not found") {
             toast.error("No user found with the provided admission number");
-          }else{
+          } else {
             toast.error("An unexpected error occurred. Please try again.");
           }
         });
@@ -71,11 +71,10 @@ const Login = () => {
             toast.error("An unexpected error occurred. Please try again.");
           }
         });
-    } catch (err:any) {
+    } catch (err: any) {
       console.log(err);
-      if(err.response?.data?.message === "wrong password"){
-                    toast.error("Incorrect password");
-
+      if (err.response?.data?.message === "wrong password") {
+        toast.error("Incorrect password");
       }
     } finally {
       setLoading(false);
@@ -272,9 +271,9 @@ const Login = () => {
                           ? credentials.identifier.length < 6
                           : credentials.identifier.length < 2 || loading
                       }
-                      className="w-full  cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400  max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
+                      className="w-full hover:scale-102 active:scale-90  cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400  max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
                     >
-                      {loading && < LoaderCircle className="animate-spin" />}
+                      {loading && <LoaderCircle className="animate-spin" />}
                       {loading ? "Authenticating..." : "Authenticate"}
                     </Button>
                   )}
