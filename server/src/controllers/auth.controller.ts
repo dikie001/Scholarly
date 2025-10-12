@@ -2,6 +2,8 @@ import type { Request, Response } from "express";
 import { student } from "../models/student.model.js";
 import { faculty } from "../models/faculty.model.js";
 import { parent } from "../models/parent.model.js";
+import { comparePassword } from "../utils/auth.utils.js";
+import type { studentRecordTypes } from "../types/auth.types.js";
 
 // Registration for a new student
 export const registerStudent = async (req: Request, res: Response) => {
@@ -49,7 +51,6 @@ export const registerFaculty = async (req: Request, res: Response) => {
   }
 };
 
-
 // Registration for a new parent
 export const registerParent = async (req: Request, res: Response) => {
   try {
@@ -70,7 +71,7 @@ export const registerParent = async (req: Request, res: Response) => {
   }
 };
 
-// Figure out which schema to use based on role
+// Figure out which schema to use for registration based on role
 export const register = (req: Request, res: Response) => {
   const { role } = req.body;
 
@@ -78,4 +79,52 @@ export const register = (req: Request, res: Response) => {
   if (role === "student") return registerStudent(req, res);
   if (role === "faculty") return registerFaculty(req, res);
   if (role === "parent") return registerParent(req, res);
+};
+
+// Authenticate students
+export const authenticateStudent = async (req: Request, res: Response) => {
+  const { identifier, password }: { identifier: string; password: string } =
+    req.body;
+  let studentRecord: studentRecordTypes;
+
+  // Validate the identifier, check if exists a student with the admissioin number
+  if (identifier && !password) {
+    studentRecord = await student.findOne({
+      admissionNumber: identifier,
+    });
+    if (studentRecord) {
+      res.status(200).json({ message: "student exists" });
+    } else if (!studentRecord) {
+      res.status(200).json({ message: "not found" });
+    }
+    console.log(studentRecord);
+  }
+
+  // Validate the password
+  if (identifier && password) {
+    try {
+      studentRecord = await student.findOne({
+        admissionNumber: identifier,
+      });
+      if (!studentRecord)
+        return res.status(400).json({ message: "ran into an error" });
+
+      const isPasswordValid = await comparePassword(
+        password,
+        studentRecord?.password
+      );
+      if (!isPasswordValid)
+        return res.status(400).json({ message: "wrong password" });
+      if(isPasswordValid) res.json(200).json({message:'correct password', studentRecord})
+      console.log(isPasswordValid);
+    } catch (err) {
+      console.log("error from auth.controller.studentlogin");
+    }
+  }
+};
+
+// Figure out the role for allocating controllers
+export const login = (req: Request, res: Response) => {
+  const { role } = req.body;
+  if (role === "student") authenticateStudent(req, res);
 };

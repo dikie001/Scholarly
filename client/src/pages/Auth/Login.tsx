@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { credentialsTypes } from "@/types/auth.types";
 import { APP_VERSION } from "@/utils/constants";
+import axios from "axios";
+import { Loader, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -12,13 +14,41 @@ const Login = () => {
   const [credentials, setCredentials] = useState<credentialsTypes>({
     identifier: "",
     password: "",
+    role: "student",
   });
+  const [tabValue, setTabValue] = useState<"student" | "parent" | "faculty">(
+    "student"
+  );
+  const [loading, setLoading] = useState(false);
 
   // Handle validating if said identifier exists
-  const HandleAuthentication = () => {
-    setIdentifierPresent(true);
+  const HandleAuthentication = async () => {
+    // Add role to credetials
+    setCredentials((prev) => ({ ...prev, role: tabValue }));
+
+    // Validate identifier
     if (credentials.identifier.trim() === "") {
       return toast.error("ID or admission number is required");
+    }
+    // Send credentials to server for validation
+    try {
+      setLoading(true);
+      axios
+        .post("http://localhost:4500/api/auth/login", credentials)
+        .then((res) => {
+          console.log(res);
+          if(res.data?.message === "student exists"){
+          setIdentifierPresent(true);
+          }else if(res.data?.message === "not found"){
+            toast.error("No user found with the provided admission number");
+          }else{
+            toast.error("An unexpected error occurred. Please try again.");
+          }
+        });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -27,10 +57,28 @@ const Login = () => {
     if (credentials.password.trim() === "") {
       return toast.error("Enter password before proceeding!");
     }
-    if (credentials.password === "dikie") {
-      toast.success("Login successful");
-    } else {
-      toast.error("Incorrect password!");
+    try {
+      setLoading(true);
+      axios
+        .post("http://localhost:4500/api/auth/login", credentials)
+        .then((res) => {
+          console.log(res);
+          if (res.data?.message === "student exists") {
+            setIdentifierPresent(true);
+          } else if (res.data?.message === "wrong password") {
+            toast.error("Incorrect password");
+          } else {
+            toast.error("An unexpected error occurred. Please try again.");
+          }
+        });
+    } catch (err:any) {
+      console.log(err);
+      if(err.response?.data?.message === "wrong password"){
+                    toast.error("Incorrect password");
+
+      }
+    } finally {
+      setLoading(false);
     }
   };
   // Handle updating the credentials object
@@ -52,7 +100,7 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Coice tabs, student or faculty */}
+        {/* Choice tabs, student or faculty */}
         <Tabs
           defaultValue="student"
           className=" mx-auto mb-2  flex items-center "
@@ -62,6 +110,7 @@ const Login = () => {
               disabled={identifierPresent}
               className="cursor-pointer"
               value="student"
+              onClick={() => setTabValue("student")}
             >
               Student
             </TabsTrigger>
@@ -69,8 +118,17 @@ const Login = () => {
               disabled={identifierPresent}
               className="cursor-pointer"
               value="faculty"
+              onClick={() => setTabValue("faculty")}
             >
               Faculty
+            </TabsTrigger>
+            <TabsTrigger
+              disabled={identifierPresent}
+              className="cursor-pointer"
+              value="parent"
+              onClick={() => setTabValue("parent")}
+            >
+              Parent
             </TabsTrigger>
           </TabsList>
 
@@ -96,6 +154,15 @@ const Login = () => {
               "
                     >
                       Use your staff ID
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium text-sm">Parents :</span>{" "}
+                    <span
+                      className="text-sm text-muted-foreground
+              "
+                    >
+                      Use your Phone number
                     </span>
                   </p>
 
@@ -127,7 +194,10 @@ const Login = () => {
                         Admission number
                       </TabsContent>
                       <TabsContent value="faculty">Staff ID</TabsContent>
+                      <TabsContent value="parent">Phone number</TabsContent>
                     </label>
+
+                    {/* Student */}
                     <TabsContent value="student">
                       <Input
                         id="identifier"
@@ -135,10 +205,12 @@ const Login = () => {
                         type="number"
                         readOnly={identifierPresent}
                         onChange={(e) => HandleCredentials(e)}
-                        placeholder="i.e 14572"
+                        placeholder="i.e 1233"
                         className="mt-1"
                       />
                     </TabsContent>
+
+                    {/* Faculty */}
                     <TabsContent value="faculty">
                       <Input
                         id="identifier"
@@ -147,6 +219,19 @@ const Login = () => {
                         onChange={(e) => HandleCredentials(e)}
                         type="text"
                         placeholder="i.e TDIOM2025"
+                        className="mt-1"
+                      />
+                    </TabsContent>
+
+                    {/* Parent */}
+                    <TabsContent value="parent">
+                      <Input
+                        id="identifier"
+                        name="identifier"
+                        type="number"
+                        readOnly={identifierPresent}
+                        onChange={(e) => HandleCredentials(e)}
+                        placeholder="i.e 071234567"
                         className="mt-1"
                       />
                     </TabsContent>
@@ -180,10 +265,17 @@ const Login = () => {
                   ) : (
                     <Button
                       onClick={HandleAuthentication}
-                      disabled={credentials.identifier.length < 2}
+                      disabled={
+                        tabValue === "parent"
+                          ? credentials.identifier.length < 10
+                          : tabValue === "faculty"
+                          ? credentials.identifier.length < 6
+                          : credentials.identifier.length < 2 || loading
+                      }
                       className="w-full  cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400  max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
                     >
-                      Authenticate
+                      {loading && < LoaderCircle className="animate-spin" />}
+                      {loading ? "Authenticating..." : "Authenticate"}
                     </Button>
                   )}
                   <CardFooter className="flex flex-col justify-center text-sm text-muted-foreground">

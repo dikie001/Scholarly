@@ -16,6 +16,7 @@ export type userTypes = {
 export type credentialsTypes = {
   identifier: string;
   password: string;
+  role: "student" | "parent" | "faculty";
 };
 
 // Zod Issues

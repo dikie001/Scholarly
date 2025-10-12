@@ -50,3 +50,12 @@ export const parseError = (err: any) => {
   } 
 
 };
+
+// FOR LOGIN
+// parse response from server and show relevant feedback
+export const parseLoginResponse = (res: AxiosResponse<any, any, {}>) => {
+  // Student login
+    if (res.data.message === "") {
+      toast.success("Account created successfuly!");
+    }
+};
