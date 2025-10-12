@@ -20,6 +20,10 @@ const Login = () => {
     "student"
   );
   const [loading, setLoading] = useState(false);
+  const [showName, setShowName] = useState(false);
+  const [name, setName] = useState("");
+  const [passwordCounter, setPasswordCounter] = useState(0);
+  const [errorCounter, setErrorCounter] = useState(0);
 
   // Handle validating if said identifier exists
   const HandleAuthentication = async () => {
@@ -39,10 +43,26 @@ const Login = () => {
           console.log(res);
           if (res.data?.message === "student exists") {
             setIdentifierPresent(true);
+
+            // Check if fullName has been sent
+            const fullName = res.data?.fullName;
+            if (fullName) {
+              setName(fullName);
+              setShowName(true);
+              console.log(fullName);
+            }
           } else if (res.data?.message === "not found") {
             toast.error("No user found with the provided admission number");
           } else {
             toast.error("An unexpected error occurred. Please try again.");
+          }
+        })
+        .catch((err) => {
+          console.log("err----", err);
+          if (err.message === "Network Error") {
+            toast.error("Network error, connect to the internet");
+            setErrorCounter((prev) => prev + 1);
+            if (errorCounter >= 3) toast.info("Contact admin please");
           }
         });
     } catch (err) {
@@ -65,17 +85,25 @@ const Login = () => {
           console.log(res);
           if (res.data?.message === "student exists") {
             setIdentifierPresent(true);
-          } else if (res.data?.message === "wrong password") {
+          } else if (res.data?.message === "correct password") {
+            toast.success("Login successful, welcome!");
+          }
+        })
+        // axios error
+        .catch((err) => {
+          console.log(err.response);
+          if (err.response?.data?.message === "wrong password") {
             toast.error("Incorrect password");
-          } else {
-            toast.error("An unexpected error occurred. Please try again.");
+            // Start the wrong password timer
+            setPasswordCounter((prev) => prev + 1);
+            if (passwordCounter >= 3)
+              toast.info("Consider resetting your password please");
           }
         });
+
+      // Try catch err
     } catch (err: any) {
-      console.log(err);
-      if (err.response?.data?.message === "wrong password") {
-        toast.error("Incorrect password");
-      }
+      console.log(err.response);
     } finally {
       setLoading(false);
     }
@@ -201,7 +229,7 @@ const Login = () => {
                       <Input
                         id="identifier"
                         name="identifier"
-                        type="number"
+                        type="text"
                         readOnly={identifierPresent}
                         onChange={(e) => HandleCredentials(e)}
                         placeholder="i.e 1233"
@@ -234,6 +262,22 @@ const Login = () => {
                         className="mt-1"
                       />
                     </TabsContent>
+
+                    {/* Full name */}
+                    {showName && (
+                      <div className="mt-2">
+                        <label htmlFor="name" className="text-sm  font-medium">
+                          fullName
+                        </label>
+                        <Input
+                          id="name"
+                          readOnly
+                          value={name}
+                          placeholder={name}
+                          className="mt-1 "
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {identifierPresent && (
@@ -265,11 +309,11 @@ const Login = () => {
                     <Button
                       onClick={HandleAuthentication}
                       disabled={
-                        tabValue === "parent"
+                        loading || tabValue === "parent"
                           ? credentials.identifier.length < 10
                           : tabValue === "faculty"
                           ? credentials.identifier.length < 6
-                          : credentials.identifier.length < 2 || loading
+                          : credentials.identifier.length < 2
                       }
                       className="w-full hover:scale-102 active:scale-90  cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400  max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
                     >

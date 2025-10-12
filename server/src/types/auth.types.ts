@@ -4,3 +4,8 @@ export type studentRecordTypes = {
     admissionNumber:number,
     password:string
 } | null
+
+export type facultyRecordTypes={
+    fullName:string,
+    
+}

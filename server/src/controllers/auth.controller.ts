@@ -42,7 +42,19 @@ export const registerFaculty = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "faculty number exists" });
     }
 
-    const newfaculty = new faculty({ fullName, phoneNumber, email, password });
+    // Assign Unique ids to faculty
+    const firstBit = fullName.split(" ")[0].slice(0, 3).toUpperCase();
+    const secondBit = fullName.split(" ")[1].slice(0, 1).toUpperCase() || "A";
+    const lastBit = Math.floor(1000 + Math.random() * 9000);
+    const staffId = `T${firstBit}${secondBit}-${lastBit}`;
+
+    const newfaculty = new faculty({
+      fullName,
+      phoneNumber,
+      email,
+      password,
+      staffId,
+    });
     await newfaculty.save();
     console.log(`New faculty account registered`);
     res.status(201).json({ message: "faculty registered successfully" });
@@ -93,6 +105,55 @@ export const authenticateStudent = async (req: Request, res: Response) => {
       admissionNumber: identifier,
     });
     if (studentRecord) {
+      res
+        .status(200)
+        .json({ message: "student exists", fullName: studentRecord.fullName });
+    } else if (!studentRecord) {
+      res.status(200).json({ message: "not found" });
+    }
+    console.log(studentRecord);
+  }
+
+  // Validate the password
+  if (identifier && password) {
+    try {
+      studentRecord = await student.findOne({
+        admissionNumber: identifier,
+      });
+      if (!studentRecord)
+        return res.status(400).json({ message: "record not found!" });
+
+      // Compare password with hashed pass in db
+      const isPasswordValid = await comparePassword(
+        password,
+        studentRecord?.password
+      );
+
+      console.log("validity", isPasswordValid);
+      if (!isPasswordValid)
+        return res.status(400).json({ message: "wrong password" });
+
+      if (isPasswordValid)
+        res.status(200).json({ message: "correct password", studentRecord });
+      console.log(isPasswordValid);
+    } catch (err) {
+      console.log("error from auth.controller.studentlogin:", err);
+    }
+  }
+};
+
+// Authenticate faculty
+export const authenticateFaculty = async (req: Request, res: Response) => {
+  const { identifier, password }: { identifier: string; password: string } =
+    req.body;
+  let studentRecord: studentRecordTypes;
+
+  // Validate the identifier, check if exists a student with the admissioin number
+  if (identifier && !password) {
+    studentRecord = await student.findOne({
+      admissionNumber: identifier,
+    });
+    if (studentRecord) {
       res.status(200).json({ message: "student exists" });
     } else if (!studentRecord) {
       res.status(200).json({ message: "not found" });
@@ -115,19 +176,18 @@ export const authenticateStudent = async (req: Request, res: Response) => {
         studentRecord?.password
       );
 
-      console.log('validity',isPasswordValid)
+      console.log("validity", isPasswordValid);
       if (!isPasswordValid)
         return res.status(400).json({ message: "wrong password" });
 
       if (isPasswordValid)
-        res.json(200).json({ message: "correct password", studentRecord });
+        res.status(200).json({ message: "correct password", studentRecord });
       console.log(isPasswordValid);
     } catch (err) {
-      console.log("error from auth.controller.studentlogin:",err);
+      console.log("error from auth.controller.studentlogin:", err);
     }
   }
 };
-
 // Figure out the role for allocating controllers
 export const login = (req: Request, res: Response) => {
   const { role } = req.body;
