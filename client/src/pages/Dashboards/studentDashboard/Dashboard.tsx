@@ -209,7 +209,7 @@ export default function StudentDashboard() {
 
   const feesData = {
     totalFees: 45000,
-    paid: 30000,
+    paid: 20000,
     balance: 15000,
     dueDate: "2025-11-15",
     transactions: [
