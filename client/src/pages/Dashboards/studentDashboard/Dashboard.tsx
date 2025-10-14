@@ -224,7 +224,7 @@ export default function StudentDashboard() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 w-full">
       {/* Sidebar */}
       <aside
         className={`${
