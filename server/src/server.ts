@@ -19,7 +19,11 @@ connectDB()
 
 // mount all routes
 app.use("/api", routes)
+app.use("/", (req, res) => {
+  res.send("API is running...")
+})
 
+// Run server
 app.listen(PORT, () => {
   console.log(`Server live in http://localhost:${PORT}`);
 });
