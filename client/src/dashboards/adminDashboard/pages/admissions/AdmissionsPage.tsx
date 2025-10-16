@@ -7,13 +7,11 @@ import {
   CheckCircle,
   XCircle,
   Clock,
-  User,
-  Mail,
-  Phone,
-  Calendar,
   FileText,
   Menu,
 } from "lucide-react";
+import { AdminSideBar } from "../../SideBar";
+import { useSidebar } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -41,22 +39,18 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 
 interface Application {
   id: number;
   name: string;
   email: string;
-  phone: string;
   grade: string;
   dateApplied: string;
   status: "pending" | "approved" | "rejected";
-  previousSchool: string;
-  parentName: string;
-  dob: string;
 }
 
 const AdmissionsPage: React.FC = () => {
+  const { toggleSidebar, setOpen } = useSidebar();
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedApplication, setSelectedApplication] =
     useState<Application | null>(null);
@@ -67,25 +61,17 @@ const AdmissionsPage: React.FC = () => {
       id: 1,
       name: "Jane Doe",
       email: "jane.doe@email.com",
-      phone: "+254 712 345 678",
       grade: "Grade 7",
       dateApplied: "Oct 10, 2025",
       status: "pending",
-      previousSchool: "Sunrise Primary",
-      parentName: "Peter Doe",
-      dob: "Jan 15, 2013",
     },
     {
       id: 2,
       name: "Kevin Omondi",
       email: "kevin.omondi@email.com",
-      phone: "+254 734 567 890",
       grade: "Grade 8",
       dateApplied: "Oct 12, 2025",
       status: "approved",
-      previousSchool: "Valley View Academy",
-      parentName: "Lucy Omondi",
-      dob: "Mar 22, 2012",
     },
   ];
 
@@ -95,28 +81,28 @@ const AdmissionsPage: React.FC = () => {
       value: applications.length,
       icon: FileText,
       color: "text-blue-600",
-      bgColor: "bg-blue-100",
+      bg: "bg-blue-100",
     },
     {
       title: "Pending Review",
       value: applications.filter((a) => a.status === "pending").length,
       icon: Clock,
       color: "text-yellow-600",
-      bgColor: "bg-yellow-100",
+      bg: "bg-yellow-100",
     },
     {
       title: "Approved",
       value: applications.filter((a) => a.status === "approved").length,
       icon: CheckCircle,
       color: "text-green-600",
-      bgColor: "bg-green-100",
+      bg: "bg-green-100",
     },
     {
       title: "Rejected",
       value: applications.filter((a) => a.status === "rejected").length,
       icon: XCircle,
       color: "text-red-600",
-      bgColor: "bg-red-100",
+      bg: "bg-red-100",
     },
   ];
 
@@ -129,62 +115,49 @@ const AdmissionsPage: React.FC = () => {
     return variants[status] || variants.pending;
   };
 
-  const getStatusIcon = (status: string) => {
-    if (status === "approved") return <CheckCircle className="h-4 w-4" />;
-    if (status === "rejected") return <XCircle className="h-4 w-4" />;
-    return <Clock className="h-4 w-4" />;
-  };
-
-  const filteredApplications =
+  const filteredApps =
     selectedStatus === "all"
       ? applications
-      : applications.filter((app) => app.status === selectedStatus);
+      : applications.filter((a) => a.status === selectedStatus);
 
-  const handleViewApplication = (application: Application) => {
-    setSelectedApplication(application);
+  const handleView = (app: Application) => {
+    setSelectedApplication(app);
     setIsViewDialogOpen(true);
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
-      {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 bg-gray-900 text-white p-4">
-        <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
-          <Menu size={18} /> Admissions
-        </h2>
-        <nav className="space-y-3">
-          <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-800">
-            Dashboard
-          </button>
-          <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-800">
-            Applications
-          </button>
-          <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-800">
-            Reports
-          </button>
-        </nav>
-      </aside>
-
-      {/* Main */}
-      <div className="flex-1 p-6 space-y-6">
-        <header className="flex justify-between items-center border-b pb-4">
-          <h2 className="text-2xl font-bold">Admissions & Enrollment</h2>
+    <div className="flex min-h-screen bg-background  max-w-screen w-full  overflow-hidden  flex-wrap">
+      <AdminSideBar />
+      <div className="flex-1 p-2 transition-all duration-300 ease-in-out max-w-full w-full overflow-auto">
+        {/* Header */}
+        <header className="flex items-center gap-4 border-b pt-2 pb-4 px-2">
+          <Menu
+            onClick={() => {
+              toggleSidebar();
+              setOpen(true);
+            }}
+            size={18}
+            className="cursor-pointer md:hidden"
+          />
+          <h2 className="text-2xl font-bold tracking-tight">
+            Admissions & Enrollment
+          </h2>
         </header>
 
         {/* Stats */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 grid-cols-2  lg:grid-cols-4 mt-6 w-full px-2">
           {stats.map((stat, i) => {
             const Icon = stat.icon;
             return (
-              <Card key={i}>
-                <CardContent className="p-6 flex justify-between items-center">
+              <Card key={i} className="w-full">
+                <CardContent className="flex justify-between items-center p-4">
                   <div>
                     <p className="text-sm text-muted-foreground">
                       {stat.title}
                     </p>
-                    <h3 className="text-2xl font-bold mt-2">{stat.value}</h3>
+                    <h3 className="text-2xl font-bold">{stat.value}</h3>
                   </div>
-                  <div className={`${stat.bgColor} p-3 rounded-full`}>
+                  <div className={`${stat.bg} p-3 rounded-full`}>
                     <Icon className={`h-6 w-6 ${stat.color}`} />
                   </div>
                 </CardContent>
@@ -194,15 +167,18 @@ const AdmissionsPage: React.FC = () => {
         </div>
 
         {/* Controls */}
-        <div className="flex flex-wrap justify-between gap-4">
-          <div className="flex gap-4 flex-wrap">
-            <div className="relative">
+        <div className="flex max-md:flex-col items-center justify-between gap-4 w-full mt-6 px-2">
+          <div className="flex  gap-3 w-full sm:w-auto">
+            <div className="relative flex-1 min-w-[200px] sm:min-w-[240px]">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search..." className="pl-9" />
+              <Input
+                placeholder="Search applicants..."
+                className="pl-9 w-full"
+              />
             </div>
 
             <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-              <SelectTrigger className="w-44">
+              <SelectTrigger className="w-full sm:w-44">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent>
@@ -214,98 +190,121 @@ const AdmissionsPage: React.FC = () => {
             </Select>
           </div>
 
-          <div className="flex gap-3">
-            <Button className="flex items-center gap-2">
-              <Plus className="h-4 w-4" /> New
+          <div className="flex gap-3  justify-center items-center  ">
+            <Button className="flex items-center gap-2 w-full">
+              <Plus className="h-4 w-4" /> New Admission
             </Button>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="flex items-center gap-2 w-full"
+            >
               <Download className="h-4 w-4" /> Export
             </Button>
           </div>
         </div>
 
         {/* Table */}
-        <Card>
+        <Card className="mt-6 max-w-screen w-[95%] px-2">
           <CardHeader>
             <CardTitle>Applications</CardTitle>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Grade</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredApplications.map((app) => (
-                  <TableRow key={app.id}>
-                    <TableCell>{app.name}</TableCell>
-                    <TableCell>{app.email}</TableCell>
-                    <TableCell>{app.grade}</TableCell>
-                    <TableCell>
-                      <span
-                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(
-                          app.status
-                        )}`}
-                      >
-                        {getStatusIcon(app.status)}
-                        {app.status}
-                      </span>
-                    </TableCell>
-                    <TableCell>{app.dateApplied}</TableCell>
-                    <TableCell>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => handleViewApplication(app)}
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
+            <div className="overflow-x-auto rounded-lg border">
+              <Table >
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Grade</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Date Applied</TableHead>
+                    <TableHead>Action</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {filteredApps.map((app) => (
+                    <TableRow key={app.id}>
+                      <TableCell>{app.name}</TableCell>
+                      <TableCell>{app.email}</TableCell>
+                      <TableCell>{app.grade}</TableCell>
+                      <TableCell>
+                        <span
+                          className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(
+                            app.status
+                          )}`}
+                        >
+                          {app.status === "approved" && (
+                            <CheckCircle className="h-4 w-4" />
+                          )}
+                          {app.status === "pending" && (
+                            <Clock className="h-4 w-4" />
+                          )}
+                          {app.status === "rejected" && (
+                            <XCircle className="h-4 w-4" />
+                          )}
+                          {app.status}
+                        </span>
+                      </TableCell>
+                      <TableCell>{app.dateApplied}</TableCell>
+                      <TableCell className="text-center">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleView(app)}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
-      </div>
 
-      {/* View Dialog */}
-      <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Application Details</DialogTitle>
-            <DialogDescription>
-              View full applicant information
-            </DialogDescription>
-          </DialogHeader>
-          {selectedApplication && (
-            <div className="grid grid-cols-2 gap-4 py-4">
-              {Object.entries(selectedApplication).map(([key, value]) => (
-                <div key={key}>
-                  <Label className="text-sm text-muted-foreground capitalize">
-                    {key.replace(/([A-Z])/g, " $1")}
-                  </Label>
-                  <p className="font-medium">{value}</p>
+        {/* Dialog */}
+        <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Applicant Details</DialogTitle>
+              <DialogDescription>Full admission info</DialogDescription>
+            </DialogHeader>
+            {selectedApplication && (
+              <div className="grid grid-cols-2 gap-4 py-4">
+                <div>
+                  <Label>Name</Label>
+                  <p>{selectedApplication.name}</p>
                 </div>
-              ))}
-            </div>
-          )}
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsViewDialogOpen(false)}
-            >
-              Close
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+                <div>
+                  <Label>Email</Label>
+                  <p>{selectedApplication.email}</p>
+                </div>
+                <div>
+                  <Label>Grade</Label>
+                  <p>{selectedApplication.grade}</p>
+                </div>
+                <div>
+                  <Label>Status</Label>
+                  <p className="capitalize">{selectedApplication.status}</p>
+                </div>
+                <div>
+                  <Label>Date Applied</Label>
+                  <p>{selectedApplication.dateApplied}</p>
+                </div>
+              </div>
+            )}
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setIsViewDialogOpen(false)}
+              >
+                Close
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 };
