@@ -1,7 +1,7 @@
+import Navbar from "@/components/shared/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useSidebar } from "@/components/ui/sidebar";
 import {
   Table,
   TableBody,
@@ -12,17 +12,14 @@ import {
 } from "@/components/ui/table";
 import {
   Edit,
-  Menu,
   Plus,
   Search,
   Trash2,
   Upload
 } from "lucide-react";
 import { AdminSideBar } from "../../SideBar";
-import Navbar from "@/components/shared/Navbar";
 
 const ClassesPage = () => {
-  const { toggleSidebar, setOpen } = useSidebar();
 
   const classes = [
     {
@@ -74,7 +71,7 @@ const ClassesPage = () => {
         <Navbar pageName="Class Management"/>
         <div className="p-4">
           {/* Controls */}
-          <div className="flex items-center justify-between max-sm:flex-col  max-w-screen w-[95%] mt-4">
+          <div className="flex items-center justify-between max-sm:flex-col  max-w-screen  mt-2">
             <div className="relative w-full sm:w-64">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search classes..." className="pl-9" />
@@ -94,7 +91,7 @@ const ClassesPage = () => {
           </div>
 
           {/* Table */}
-          <Card className="mt-6 max-w-screen w-[95%]">
+          <Card className="mt-6 max-w-screen">
             <CardHeader>
               <CardTitle>Class List</CardTitle>
             </CardHeader>
