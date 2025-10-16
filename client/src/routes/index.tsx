@@ -10,6 +10,7 @@ import Students from "@/dashboards/adminDashboard/pages/students/StudentsPage";
 import TeachersPage from "@/dashboards/adminDashboard/pages/teachers/TeachersPage";
 import ClassesPage from "@/dashboards/adminDashboard/pages/classes/ClassesPage";
 import AdmissionsPage from "@/dashboards/adminDashboard/pages/admissions/AdmissionsPage";
+import AttendancePage from "@/dashboards/adminDashboard/pages/attendance/AttendancePage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -23,6 +24,7 @@ const AppRoutes = () => {
       <Route path="/admin/teachers" element={<TeachersPage />} />
       <Route path="/admin/classes" element={<ClassesPage />} />
       <Route path="/admin/admissions" element={<AdmissionsPage />} />
+      <Route path="/admin/attendance" element={<AttendancePage />} />
       <Route path="/principal_dashboard" element={<PrincipalDashboard />} />
     </Routes>
   );

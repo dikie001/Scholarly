@@ -32,7 +32,7 @@ import {
   Settings,
   UserCheck,
   Users,
-  type LucideIcon
+  type LucideIcon,
 } from "lucide-react";
 
 interface NavItem {
@@ -51,7 +51,12 @@ const navCategories: NavCategory[] = [
   {
     label: "MANAGEMENT",
     items: [
-      { id: "overview", label: "Dashboard", icon: Home, href: "/admin_dashboard" },
+      {
+        id: "overview",
+        label: "Dashboard",
+        icon: Home,
+        href: "/admin_dashboard",
+      },
       {
         id: "students",
         label: "Students",
@@ -85,7 +90,7 @@ const navCategories: NavCategory[] = [
         id: "attendance",
         label: "Attendance",
         icon: Clock,
-        href: "/attendance",
+        href: "/admin/attendance",
       },
       {
         id: "performance",
