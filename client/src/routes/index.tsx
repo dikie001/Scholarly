@@ -1,11 +1,11 @@
 
 import Login from "@/pages/Auth/Login";
 import Signup from "@/pages/Auth/Signup";
-import AdminDashboard from "@/pages/Dashboards/adminDashboard/adminDashboard";
-import FacultyDashboard from "@/pages/Dashboards/facultyDashboard/facultyDashboard";
-import ParentDashboard from "@/pages/Dashboards/parentDashboard/parentDashboard";
-import PrincipalDashboard from "@/pages/Dashboards/principalDashboard.tsx/Dashboard";
-import StudentDashboard from "@/pages/Dashboards/studentDashboard/Dashboard";
+import AdminDashboard from "@/dashboards/adminDashboard/AdminDashboard";
+import FacultyDashboard from "@/dashboards/facultyDashboard/facultyDashboard";
+import ParentDashboard from "@/dashboards/parentDashboard/parentDashboard";
+import PrincipalDashboard from "@/dashboards/principalDashboard.tsx/Dashboard";
+import StudentDashboard from "@/dashboards/studentDashboard/Dashboard";
 import { Route, Routes } from "react-router-dom";
 const AppRoutes = () => {
   return (
