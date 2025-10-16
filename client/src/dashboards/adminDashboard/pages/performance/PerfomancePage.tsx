@@ -1,7 +1,26 @@
-import { Award, BarChart3, CheckCircle, Download, TrendingUp } from 'lucide-react';
+import {
+  Award,
+  BarChart3,
+  CheckCircle,
+  Download,
+  TrendingUp,
+  Search,
+} from "lucide-react";
+import Navbar from "@/components/shared/Navbar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { AdminSideBar } from "../../SideBar";
 
-const PerfomancePage = () => {
-
+const PerformancePage = () => {
   const performanceData = [
     { subject: "Mathematics", avgScore: 78.5, passRate: 85, excellence: 45 },
     { subject: "English", avgScore: 82.3, passRate: 90, excellence: 52 },
@@ -9,93 +28,118 @@ const PerfomancePage = () => {
     { subject: "Sciences", avgScore: 75.8, passRate: 82, excellence: 40 },
     { subject: "Social Studies", avgScore: 84.2, passRate: 92, excellence: 58 },
   ];
-  
+
   return (
-    <div>
-      <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-gray-800">
-          Academic Performance
-        </h2>
+    <div className="flex min-h-screen bg-background w-full max-w-screen flex-wrap">
+      <AdminSideBar />
+      <div className="flex-1 transition-all duration-300 ease-in-out w-full max-w-full">
+        {/* Navbar */}
+        <Navbar pageName="Academic Performance" />
 
-        {/* Overall Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 text-center">
-            <TrendingUp className="w-8 h-8 text-purple-600 mx-auto mb-3" />
-            <p className="text-sm text-gray-500">Overall Avg Score</p>
-            <p className="text-2xl font-bold text-gray-800">79.8%</p>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 text-center">
-            <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-3" />
-            <p className="text-sm text-gray-500">Overall Pass Rate</p>
-            <p className="text-2xl font-bold text-gray-800">87.4%</p>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 text-center">
-            <Award className="w-8 h-8 text-yellow-600 mx-auto mb-3" />
-            <p className="text-sm text-gray-500">Students with Distinction</p>
-            <p className="text-2xl font-bold text-gray-800">210</p>
-          </div>
-        </div>
+        <div className="p-4">
+          {/* Controls */}
+          <div className="flex items-center justify-between max-sm:flex-col mt-2">
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input placeholder="Search subjects..." className="pl-9" />
+            </div>
 
-        {/* Performance by Subject */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-          <h3 className="text-lg font-bold text-gray-800 p-4 border-b flex items-center">
-            <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
-            Performance by Core Subject
-          </h3>
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b">
-              <tr>
-                <th className="text-left py-3 px-4 font-bold text-gray-700">
-                  Subject
-                </th>
-                <th className="text-center py-3 px-4 font-bold text-gray-700">
-                  Average Score (%)
-                </th>
-                <th className="text-center py-3 px-4 font-bold text-gray-700">
-                  Pass Rate (%)
-                </th>
-                <th className="text-center py-3 px-4 font-bold text-gray-700">
-                  Students with Excellence
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {performanceData.map((item, idx) => (
-                <tr key={idx} className="border-b hover:bg-gray-50">
-                  <td className="py-3 px-4 font-medium text-gray-800">
-                    {item.subject}
-                  </td>
-                  <td className="py-3 px-4 text-center font-bold">
-                    {item.avgScore}
-                  </td>
-                  <td className="py-3 px-4 text-center">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        item.passRate >= 85
-                          ? "bg-green-100 text-green-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {item.passRate}%
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 text-center">{item.excellence}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            <div className="flex gap-4 items-center justify-center max-md:mt-3">
+              <Button
+                variant="outline"
+                className="flex items-center gap-2 max-sm:w-full"
+              >
+                <Download className="h-4 w-4" /> Export Reports
+              </Button>
+            </div>
+          </div>
 
-        {/* Actions */}
-        <div className="flex space-x-4">
-          <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
-            <Download className="w-5 h-5" />
-            <span>Export Grade Reports</span>
-          </button>
+          {/* Summary Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center p-6">
+                <TrendingUp className="w-8 h-8 text-purple-600 mb-3" />
+                <p className="text-sm text-muted-foreground">
+                  Overall Avg Score
+                </p>
+                <p className="text-2xl font-bold">79.8%</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center p-6">
+                <CheckCircle className="w-8 h-8 text-green-600 mb-3" />
+                <p className="text-sm text-muted-foreground">
+                  Overall Pass Rate
+                </p>
+                <p className="text-2xl font-bold">87.4%</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center p-6">
+                <Award className="w-8 h-8 text-yellow-600 mb-3" />
+                <p className="text-sm text-muted-foreground">
+                  Students with Distinction
+                </p>
+                <p className="text-2xl font-bold">210</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Performance Table */}
+          <Card className="mt-6">
+            <CardHeader className="flex flex-row items-center gap-2">
+              <BarChart3 className="h-5 w-5 text-blue-600" />
+              <CardTitle>Performance by Core Subject</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Subject</TableHead>
+                    <TableHead className="text-center">
+                      Average Score (%)
+                    </TableHead>
+                    <TableHead className="text-center">Pass Rate (%)</TableHead>
+                    <TableHead className="text-center">
+                      Students with Excellence
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {performanceData.map((item, idx) => (
+                    <TableRow key={idx}>
+                      <TableCell className="font-medium">
+                        {item.subject}
+                      </TableCell>
+                      <TableCell className="text-center font-semibold">
+                        {item.avgScore}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            item.passRate >= 85
+                              ? "bg-green-100 text-green-700"
+                              : "bg-yellow-100 text-yellow-700"
+                          }`}
+                        >
+                          {item.passRate}%
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {item.excellence}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default PerfomancePage
+export default PerformancePage;
