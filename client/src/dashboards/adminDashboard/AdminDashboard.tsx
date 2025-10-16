@@ -1,4 +1,5 @@
 import Navbar from "@/components/shared/Navbar";
+import { AdminSideBar } from "./SideBar";
 import {
   Activity,
   AlertCircle,
@@ -8,12 +9,13 @@ import {
   DollarSign,
   FileText,
   UserCheck,
-  Users
+  Users,
 } from "lucide-react";
-import { AdminSideBar } from "./SideBar";
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 
 export default function AdminDashboard() {
-
   const stats = [
     {
       label: "Total Students",
@@ -46,82 +48,44 @@ export default function AdminDashboard() {
   ];
 
   const quickStats = [
-    {
-      label: "Active Classes",
-      value: "48",
-      color: "bg-blue-50 text-blue-700",
-      icon: BookOpen,
-    },
-    {
-      label: "Pending Admissions",
-      value: "23",
-      color: "bg-yellow-50 text-yellow-700",
-      icon: AlertCircle,
-    },
-    {
-      label: "Fee Collection",
-      value: "87%",
-      color: "bg-green-50 text-green-700",
-      icon: DollarSign,
-    },
-    {
-      label: "Staff Present Today",
-      value: "82/85",
-      color: "bg-purple-50 text-purple-700",
-      icon: UserCheck,
-    },
+    { label: "Active Classes", value: "48", icon: BookOpen },
+    { label: "Pending Admissions", value: "23", icon: AlertCircle },
+    { label: "Fee Collection", value: "87%", icon: DollarSign },
+    { label: "Staff Present Today", value: "82/85", icon: UserCheck },
   ];
 
   const recentActivities = [
     {
-      type: "student",
       message: "New student admission: Sarah Njoki - Grade 7",
       time: "5 minutes ago",
       icon: Users,
-      color: "text-blue-600",
+      color: "text-blue-400",
     },
     {
-      type: "payment",
       message: "Fee payment received: KSh 45,000 from John Kamau",
       time: "1 hour ago",
       icon: DollarSign,
-      color: "text-green-600",
+      color: "text-green-400",
     },
     {
-      type: "teacher",
       message: "Mr. Omondi submitted Grade 8A reports",
       time: "2 hours ago",
       icon: FileText,
-      color: "text-purple-600",
+      color: "text-purple-400",
     },
     {
-      type: "alert",
       message: "3 students marked absent today",
       time: "3 hours ago",
       icon: AlertCircle,
-      color: "text-orange-600",
+      color: "text-orange-400",
     },
     {
-      type: "system",
       message: "System backup completed successfully",
       time: "5 hours ago",
       icon: Database,
-      color: "text-gray-600",
+      color: "text-gray-400",
     },
   ];
-
-  const feesSummary = {
-    totalExpected: 56250000,
-    totalCollected: 45200000,
-    totalPending: 11050000,
-    collectionRate: 80.4,
-    byGrade: [
-      { grade: "Grade 9", expected: 12000000, collected: 10500000, rate: 87.5 },
-      { grade: "Grade 8", expected: 15000000, collected: 12000000, rate: 80.0 },
-      { grade: "Grade 7", expected: 18000000, collected: 14400000, rate: 80.0 },
-      { grade: "Grade 6", expected: 11250000, collected: 8300000, rate: 73.8 },
-    ],
-  };
 
   const pendingActions = [
     { action: "Approve 5 leave requests", priority: "high", deadline: "Today" },
@@ -139,202 +103,161 @@ export default function AdminDashboard() {
   ];
 
   const systemAlerts = [
+    { message: "15 students with fees balance > KSh 20,000", severity: "high" },
     {
-      type: "warning",
-      message: "15 students with fees balance > KSh 20,000",
-      severity: "high",
-    },
-    {
-      type: "info",
       message: "Parent-Teacher meeting scheduled for Oct 28",
       severity: "medium",
     },
-    {
-      type: "success",
-      message: "All teachers submitted weekly reports",
-      severity: "low",
-    },
+    { message: "All teachers submitted weekly reports", severity: "low" },
   ];
 
+  const feesSummary = {
+    collectionRate: 80.4,
+    totalCollected: 45200000,
+    totalPending: 11050000,
+  };
 
   return (
-    <div className="flex h-screen bg-gray-50 max-w-screen w-full flex-wrap">
-      {/* Sidebar */}
+    <div className="flex h-screen w-full bg-background text-foreground">
       <AdminSideBar />
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden w-full max-w-full ">
-        <Navbar pageName="Admin Dashboard"/>
-
-        {/* Content Area */}
-        <main className="flex-1 overflow-y-auto p-4">
-          <div className="space-y-6">
-            {/* Main Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {stats.map((stat, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className={`${stat.color} p-3 rounded-lg`}>
-                      <stat.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-green-600 bg-green-50 px-2 py-1 rounded">
-                      {stat.change}
-                    </span>
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Navbar pageName="Admin Dashboard" />
+        <main className="flex-1 overflow-y-auto p-4 space-y-6">
+          {/* Stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {stats.map((stat, idx) => (
+              <Card key={idx} className="bg-card text-card-foreground">
+                <CardHeader className="flex items-center justify-between">
+                  <div className={`${stat.color} p-2 rounded-lg`}>
+                    <stat.icon className="w-6 h-6 text-white" />
                   </div>
-                  <p className="text-sm text-gray-500 mb-1">{stat.label}</p>
-                  <p className="text-3xl font-bold text-gray-800">
-                    {stat.value}
-                  </p>
-                </div>
-              ))}
-            </div>
+                  <Badge variant="secondary">{stat.change}</Badge>
+                </CardHeader>
+                <CardContent>
+                  <CardTitle>{stat.label}</CardTitle>
+                  <p className="text-2xl font-bold">{stat.value}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {quickStats.map((stat, idx) => (
-                <div
-                  key={idx}
-                  className={`${stat.color} rounded-xl shadow-sm p-4 border`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium mb-1">{stat.label}</p>
-                      <p className="text-2xl font-bold">{stat.value}</p>
-                    </div>
-                    <stat.icon className="w-8 h-8 opacity-50" />
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {quickStats.map((stat, idx) => (
+              <Card key={idx} className="bg-card text-card-foreground p-4">
+                <CardHeader className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>{stat.label}</CardTitle>
+                    <p className="text-xl font-bold">{stat.value}</p>
                   </div>
-                </div>
-              ))}
-            </div>
+                  <stat.icon className="w-8 h-8 opacity-50" />
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
 
-            {/* Main Dashboard Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              {/* Recent Activities */}
-              <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                  <Activity className="w-5 h-5 mr-2 text-blue-600" />
-                  Recent Activities
-                </h3>
-                <div className="space-y-3">
-                  {recentActivities.map((activity, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg"
-                    >
-                      <activity.icon
-                        className={`w-5 h-5 ${activity.color} mt-0.5`}
-                      />
-                      <div className="flex-1">
-                        <p className="text-sm text-gray-800">
-                          {activity.message}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {activity.time}
+          {/* Recent Activities & Pending Actions */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <Card className="lg:col-span-2 bg-card text-card-foreground p-4">
+              <CardHeader className="flex items-center mb-2">
+                <Activity className="w-5 h-5 mr-2 text-blue-400" />
+                <CardTitle>Recent Activities</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {recentActivities.map((act, idx) => (
+                  <Card
+                    key={idx}
+                    className="p-2 bg-muted text-muted-foreground"
+                  >
+                    <div className="flex items-start space-x-2">
+                      <act.icon className={`w-5 h-5 ${act.color} mt-1`} />
+                      <div>
+                        <p className="text-sm">{act.message}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {act.time}
                         </p>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </Card>
+                ))}
+              </CardContent>
+            </Card>
 
-              {/* Pending Actions */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                  <AlertCircle className="w-5 h-5 mr-2 text-orange-600" />
-                  Pending Actions
-                </h3>
-                <div className="space-y-3">
-                  {pendingActions.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className={`p-3 rounded-lg border-l-4 ${
-                        item.priority === "high"
-                          ? "bg-red-50 border-red-500"
-                          : "bg-yellow-50 border-yellow-500"
-                      }`}
-                    >
-                      <p className="text-sm font-medium text-gray-800">
-                        {item.action}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        Due: {item.deadline}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <Card className="bg-card text-card-foreground p-4">
+              <CardHeader className="flex items-center mb-2">
+                <AlertCircle className="w-5 h-5 mr-2 text-orange-400" />
+                <CardTitle>Pending Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {pendingActions.map((item, idx) => (
+                  <Card
+                    key={idx}
+                    className={`p-2 border-l-4 ${
+                      item.priority === "high"
+                        ? "border-red-500 bg-destructive/10"
+                        : "border-yellow-500 bg-warning/10"
+                    }`}
+                  >
+                    <p className="text-sm font-medium">{item.action}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Due: {item.deadline}
+                    </p>
+                  </Card>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
 
-            {/* System Alerts and Fee Collection Overview */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {/* System Alerts */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                  <Bell className="w-5 h-5 mr-2 text-red-600" />
-                  System Alerts
-                </h3>
-                <div className="space-y-3">
-                  {systemAlerts.map((alert, idx) => (
-                    <div
-                      key={idx}
-                      className={`p-4 rounded-lg border-l-4 ${
-                        alert.severity === "high"
-                          ? "bg-red-50 border-red-500"
-                          : alert.severity === "medium"
-                          ? "bg-yellow-50 border-yellow-500"
-                          : "bg-green-50 border-green-500"
-                      }`}
-                    >
-                      <p className="text-sm text-gray-800">{alert.message}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* System Alerts & Fee Collection */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <Card className="bg-card text-card-foreground p-4">
+              <CardHeader className="flex items-center mb-2">
+                <Bell className="w-5 h-5 mr-2 text-red-400" />
+                <CardTitle>System Alerts</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {systemAlerts.map((alert, idx) => (
+                  <Card
+                    key={idx}
+                    className={`p-2 border-l-4 ${
+                      alert.severity === "high"
+                        ? "border-red-500 bg-destructive/10"
+                        : alert.severity === "medium"
+                        ? "border-yellow-500 bg-warning/10"
+                        : "border-green-500 bg-success/10"
+                    }`}
+                  >
+                    <p className="text-sm">{alert.message}</p>
+                  </Card>
+                ))}
+              </CardContent>
+            </Card>
 
-              {/* Fee Collection Overview */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                  <DollarSign className="w-5 h-5 mr-2 text-green-600" />
-                  Fee Collection
-                </h3>
-                <div className="space-y-4">
+            <Card className="bg-card text-card-foreground p-4">
+              <CardHeader className="flex items-center mb-2">
+                <DollarSign className="w-5 h-5 mr-2 text-green-400" />
+                <CardTitle>Fee Collection</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-sm">Collection Rate</p>
+                <Progress value={feesSummary.collectionRate} />
+                <div className="flex justify-between mt-2">
                   <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm text-gray-600">
-                        Collection Rate
-                      </span>
-                      <span className="text-sm font-bold text-gray-800">
-                        {feesSummary.collectionRate}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
-                      <div
-                        className="bg-green-600 h-3 rounded-full"
-                        style={{ width: `${feesSummary.collectionRate}%` }}
-                      ></div>
-                    </div>
+                    <p className="text-xs">Collected</p>
+                    <p className="font-bold">
+                      {(feesSummary.totalCollected / 1000000).toFixed(1)}M
+                    </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-green-50 p-3 rounded-lg">
-                      <p className="text-xs text-gray-600 mb-1">Collected</p>
-                      <p className="text-lg font-bold text-green-700">
-                        KSh {(feesSummary.totalCollected / 1000000).toFixed(1)}M
-                      </p>
-                    </div>
-                    <div className="bg-orange-50 p-3 rounded-lg">
-                      <p className="text-xs text-gray-600 mb-1">Pending</p>
-                      <p className="text-lg font-bold text-orange-700">
-                        KSh {(feesSummary.totalPending / 1000000).toFixed(1)}M
-                      </p>
-                    </div>
+                  <div>
+                    <p className="text-xs">Pending</p>
+                    <p className="font-bold">
+                      {(feesSummary.totalPending / 1000000).toFixed(1)}M
+                    </p>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>{" "}
+              </CardContent>
+            </Card>
+          </div>
         </main>
       </div>
     </div>

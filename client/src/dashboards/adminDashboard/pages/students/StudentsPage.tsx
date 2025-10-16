@@ -12,8 +12,13 @@ import {
 } from "@/components/ui/table";
 import { Edit, Plus, Search, Trash2, Upload, User } from "lucide-react";
 import { AdminSideBar } from "../../SideBar";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import AddStudentModal from "../../modals/addStudentModal";
 
 const Students = () => {
+  const navigate = useNavigate();
+  const [showAddStudentModal, setShowAddStudentModal] = useState(false);
 
   const students = [
     {
@@ -69,8 +74,7 @@ const Students = () => {
 
       <div className="flex-1  transition-all duration-300 ease-in-out max-w-full w-full">
         {/* Navbar */}
-        <Navbar pageName="Student Management"/>
-
+        <Navbar pageName="Student Management" />
         <div className="p-4">
           {/* Controls */}
           <div className="flex items-center justify-between max-sm:flex-col max-w-screen  mt-2">
@@ -80,7 +84,10 @@ const Students = () => {
             </div>
 
             <div className="flex gap-4 items-center justify-center max-md:mt-3">
-              <Button className="flex cursor-pointer dark:text-foreground items-center gap-2 max-sm:w-full">
+              <Button
+                onClick={() => setShowAddStudentModal(true)}
+                className="flex cursor-pointer dark:text-foreground items-center gap-2 max-sm:w-full"
+              >
                 <Plus className="h-4 w-4" /> Add Student
               </Button>
               <Button
@@ -164,7 +171,14 @@ const Students = () => {
               </Table>
             </CardContent>
           </Card>
-        </div>
+        </div>{" "}
+        {/* MODALS */}
+        {showAddStudentModal && (
+          <AddStudentModal
+            open={showAddStudentModal}
+            onClose={() => setShowAddStudentModal(false)}
+          />
+        )}
       </div>
     </div>
   );
