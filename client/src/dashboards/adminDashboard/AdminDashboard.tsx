@@ -10,7 +10,6 @@ import {
   UserCheck,
   Users
 } from "lucide-react";
-import { useState } from "react";
 import { AdminSideBar } from "./SideBar";
 
 export default function AdminDashboard() {
