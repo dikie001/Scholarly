@@ -1,4 +1,3 @@
-
 import Login from "@/pages/Auth/Login";
 import Signup from "@/pages/Auth/Signup";
 import AdminDashboard from "@/dashboards/adminDashboard/AdminDashboard";
@@ -7,6 +6,7 @@ import ParentDashboard from "@/dashboards/parentDashboard/parentDashboard";
 import PrincipalDashboard from "@/dashboards/principalDashboard.tsx/Dashboard";
 import StudentDashboard from "@/dashboards/studentDashboard/Dashboard";
 import { Route, Routes } from "react-router-dom";
+import Students from "@/dashboards/adminDashboard/pages/students/Students";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -16,9 +16,11 @@ const AppRoutes = () => {
       <Route path="/faculty_dashboard" element={<FacultyDashboard />} />
       <Route path="/parent_dashboard" element={<ParentDashboard />} />
       <Route path="/admin_dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/students" element={<Students />} />
+
       <Route path="/principal_dashboard" element={<PrincipalDashboard />} />
     </Routes>
   );
-}
+};
 
-export default AppRoutes
+export default AppRoutes;

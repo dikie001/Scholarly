@@ -1,20 +1,14 @@
-import type { NavbarPropTypes } from '@/types/navbar.types'
-import { Bell, Menu, User } from 'lucide-react'
+import { Bell, User } from 'lucide-react'
 import type React from 'react'
 
 
 
-const Navbar:React.FC<NavbarPropTypes> = ({setSidebarOpen}) => {
+const Navbar:React.FC = () => {
   return (
-        <header className="bg-white w-full   shadow-sm border-b sticky top-0 z-10">
+        <header className=" w-full   shadow-sm border-b sticky top-0 z-10">
           <div className="flex items-center justify-between px-6 py-4">
             <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="lg:hidden"
-              >
-                <Menu className="w-6 h-6" />
-              </button>
+    
               <div>
                 <h1 className="text-2xl font-bold text-gray-800">
                   Admin Dashboard

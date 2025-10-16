@@ -37,7 +37,7 @@ importers:
         version: 1.2.8(@types/react-dom@19.2.0(@types/react@19.2.0))(@types/react@19.2.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@tailwindcss/vite':
         specifier: ^4.1.14
-        version: 4.1.14(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1))
+        version: 4.1.14(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1))
       axios:
         specifier: ^1.12.2
         version: 1.12.2
@@ -83,7 +83,7 @@ importers:
         version: 19.2.0(@types/react@19.2.0)
       '@vitejs/plugin-react-swc':
         specifier: ^4.1.0
-        version: 4.1.0(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1))
+        version: 4.1.0(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1))
       eslint:
         specifier: ^9.36.0
         version: 9.37.0(jiti@2.6.1)
@@ -110,7 +110,7 @@ importers:
         version: 8.45.0(eslint@9.37.0(jiti@2.6.1))(typescript@5.9.3)
       vite:
         specifier: ^7.1.7
-        version: 7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)
+        version: 7.1.9(@types/node@24.7.0)(jiti@2.6.1)
 
 packages:
 
@@ -208,12 +208,6 @@ packages:
     resolution: {integrity: sha512-3BBSbgzuB9ajLoVZk0mGu+EHlBwkusRmeNYdqmznmMc9zGASFjSsxgkNsqmXugpPk00gJ0JNKh/97nxmjctdew==}
     engines: {node: '>=18'}
     cpu: [s390x]
-    os: [linux]
-
-  '@esbuild/linux-x64@0.25.10':
-    resolution: {integrity: sha512-QSX81KhFoZGwenVyPoberggdW1nrQZSvfVDAIUXr3WqLRZGZqWk/P4T8p2SP+de2Sr5HPcvjhcJzEiulKgnxtA==}
-    engines: {node: '>=18'}
-    cpu: [x64]
     os: [linux]
 
   '@esbuild/netbsd-arm64@0.25.10':
@@ -896,18 +890,6 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@swc/core-linux-x64-gnu@1.13.5':
-    resolution: {integrity: sha512-WD530qvHrki8Ywt/PloKUjaRKgstQqNGvmZl54g06kA+hqtSE2FTG9gngXr3UJxYu/cNAjJYiBifm7+w4nbHbA==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@swc/core-linux-x64-musl@1.13.5':
-    resolution: {integrity: sha512-Luj8y4OFYx4DHNQTWjdIuKTq2f5k6uSXICqx+FSabnXptaOBAbJHNbHT/06JZh6NRUouaf0mYXN0mcsqvkhd7Q==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [linux]
-
   '@swc/core-win32-arm64-msvc@1.13.5':
     resolution: {integrity: sha512-cZ6UpumhF9SDJvv4DA2fo9WIzlNFuKSkZpZmPG1c+4PFSEMy5DFOjBSllCvnqihCabzXzpn6ykCwBmHpy31vQw==}
     engines: {node: '>=10'}
@@ -984,18 +966,6 @@ packages:
     resolution: {integrity: sha512-ISZjT44s59O8xKsPEIesiIydMG/sCXoMBCqsphDm/WcbnuWLxxb+GcvSIIA5NjUw6F8Tex7s5/LM2yDy8RqYBQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
-    os: [linux]
-
-  '@tailwindcss/oxide-linux-x64-gnu@4.1.14':
-    resolution: {integrity: sha512-02c6JhLPJj10L2caH4U0zF8Hji4dOeahmuMl23stk0MU1wfd1OraE7rOloidSF8W5JTHkFdVo/O7uRUJJnUAJg==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@tailwindcss/oxide-linux-x64-musl@4.1.14':
-    resolution: {integrity: sha512-TNGeLiN1XS66kQhxHG/7wMeQDOoL0S33x9BgmydbrWAb9Qw0KYdd8o1ifx4HOGDWhVmJ+Ul+JQ7lyknQFilO3Q==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
     os: [linux]
 
   '@tailwindcss/oxide-wasm32-wasi@4.1.14':
@@ -1523,18 +1493,6 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  lightningcss-linux-x64-gnu@1.30.1:
-    resolution: {integrity: sha512-piWx3z4wN8J8z3+O5kO74+yr6ze/dKmPnI7vLqfSqI8bccaTGY5xiSGVIJBDd5K5BHlvVLpUB3S2YCfelyJ1bw==}
-    engines: {node: '>= 12.0.0'}
-    cpu: [x64]
-    os: [linux]
-
-  lightningcss-linux-x64-musl@1.30.1:
-    resolution: {integrity: sha512-rRomAK7eIkL+tHY0YPxbc5Dra2gXlI63HL+v1Pdi1a3sC+tJTcFrHX+E86sulgAXeI7rSzDYhPSeHHjqFhqfeQ==}
-    engines: {node: '>= 12.0.0'}
-    cpu: [x64]
-    os: [linux]
-
   lightningcss-win32-arm64-msvc@1.30.1:
     resolution: {integrity: sha512-mSL4rqPi4iXq5YVqzSsJgMVFENoa4nGTT/GjO2c0Yl9OuQfPsIfncvLrEW6RbbB24WtZ3xP/2CCmI3tNkNV4oA==}
     engines: {node: '>= 12.0.0'}
@@ -1963,9 +1921,6 @@ snapshots:
     optional: true
 
   '@esbuild/linux-s390x@0.25.10':
-    optional: true
-
-  '@esbuild/linux-x64@0.25.10':
     optional: true
 
   '@esbuild/netbsd-arm64@0.25.10':
@@ -2551,12 +2506,6 @@ snapshots:
   '@swc/core-linux-arm64-musl@1.13.5':
     optional: true
 
-  '@swc/core-linux-x64-gnu@1.13.5':
-    optional: true
-
-  '@swc/core-linux-x64-musl@1.13.5':
-    optional: true
-
   '@swc/core-win32-arm64-msvc@1.13.5':
     optional: true
 
@@ -2576,8 +2525,6 @@ snapshots:
       '@swc/core-linux-arm-gnueabihf': 1.13.5
       '@swc/core-linux-arm64-gnu': 1.13.5
       '@swc/core-linux-arm64-musl': 1.13.5
-      '@swc/core-linux-x64-gnu': 1.13.5
-      '@swc/core-linux-x64-musl': 1.13.5
       '@swc/core-win32-arm64-msvc': 1.13.5
       '@swc/core-win32-ia32-msvc': 1.13.5
       '@swc/core-win32-x64-msvc': 1.13.5
@@ -2619,12 +2566,6 @@ snapshots:
   '@tailwindcss/oxide-linux-arm64-musl@4.1.14':
     optional: true
 
-  '@tailwindcss/oxide-linux-x64-gnu@4.1.14':
-    optional: true
-
-  '@tailwindcss/oxide-linux-x64-musl@4.1.14':
-    optional: true
-
   '@tailwindcss/oxide-wasm32-wasi@4.1.14':
     optional: true
 
@@ -2646,18 +2587,16 @@ snapshots:
       '@tailwindcss/oxide-linux-arm-gnueabihf': 4.1.14
       '@tailwindcss/oxide-linux-arm64-gnu': 4.1.14
       '@tailwindcss/oxide-linux-arm64-musl': 4.1.14
-      '@tailwindcss/oxide-linux-x64-gnu': 4.1.14
-      '@tailwindcss/oxide-linux-x64-musl': 4.1.14
       '@tailwindcss/oxide-wasm32-wasi': 4.1.14
       '@tailwindcss/oxide-win32-arm64-msvc': 4.1.14
       '@tailwindcss/oxide-win32-x64-msvc': 4.1.14
 
-  '@tailwindcss/vite@4.1.14(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1))':
+  '@tailwindcss/vite@4.1.14(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1))':
     dependencies:
       '@tailwindcss/node': 4.1.14
       '@tailwindcss/oxide': 4.1.14
       tailwindcss: 4.1.14
-      vite: 7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)
+      vite: 7.1.9(@types/node@24.7.0)(jiti@2.6.1)
 
   '@types/estree@1.0.8': {}
 
@@ -2768,11 +2707,11 @@ snapshots:
       '@typescript-eslint/types': 8.45.0
       eslint-visitor-keys: 4.2.1
 
-  '@vitejs/plugin-react-swc@4.1.0(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1))':
+  '@vitejs/plugin-react-swc@4.1.0(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-beta.35
       '@swc/core': 1.13.5
-      vite: 7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)
+      vite: 7.1.9(@types/node@24.7.0)(jiti@2.6.1)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -2922,7 +2861,6 @@ snapshots:
       '@esbuild/linux-ppc64': 0.25.10
       '@esbuild/linux-riscv64': 0.25.10
       '@esbuild/linux-s390x': 0.25.10
-      '@esbuild/linux-x64': 0.25.10
       '@esbuild/netbsd-arm64': 0.25.10
       '@esbuild/netbsd-x64': 0.25.10
       '@esbuild/openbsd-arm64': 0.25.10
@@ -3179,12 +3117,6 @@ snapshots:
   lightningcss-linux-arm64-musl@1.30.1:
     optional: true
 
-  lightningcss-linux-x64-gnu@1.30.1:
-    optional: true
-
-  lightningcss-linux-x64-musl@1.30.1:
-    optional: true
-
   lightningcss-win32-arm64-msvc@1.30.1:
     optional: true
 
@@ -3201,8 +3133,6 @@ snapshots:
       lightningcss-linux-arm-gnueabihf: 1.30.1
       lightningcss-linux-arm64-gnu: 1.30.1
       lightningcss-linux-arm64-musl: 1.30.1
-      lightningcss-linux-x64-gnu: 1.30.1
-      lightningcss-linux-x64-musl: 1.30.1
       lightningcss-win32-arm64-msvc: 1.30.1
       lightningcss-win32-x64-msvc: 1.30.1
 
@@ -3482,7 +3412,7 @@ snapshots:
     dependencies:
       react: 19.2.0
 
-  vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1):
+  vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1):
     dependencies:
       esbuild: 0.25.10
       fdir: 6.5.0(picomatch@4.0.3)
@@ -3494,7 +3424,6 @@ snapshots:
       '@types/node': 24.7.0
       fsevents: 2.3.3
       jiti: 2.6.1
-      lightningcss: 1.30.1
 
   which@2.0.2:
     dependencies:

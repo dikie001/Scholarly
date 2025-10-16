@@ -1,37 +1,32 @@
-import React, { useState } from "react";
+import Navbar from "@/components/shared/Navbar";
 import {
+  Activity,
+  AlertCircle,
+  Award,
+  BarChart3,
+  Bell,
   BookOpen,
   Calendar,
-  Award,
-  FileText,
-  Bell,
-  User,
-  LogOut,
-  Menu,
-  X,
+  CheckCircle,
   Clock,
-  TrendingUp,
-  MessageSquare,
+  Database,
   DollarSign,
-  Users,
-  Home,
-  Settings,
-  BarChart3,
-  UserCheck,
+  Download,
+  Edit,
+  FileText,
+  MessageSquare,
   Plus,
   Search,
-  Edit,
+  Settings,
   Trash2,
-  Download,
+  TrendingUp,
   Upload,
-  AlertCircle,
-  CheckCircle,
-  XCircle,
-  Database,
-  Shield,
-  Activity,
+  User,
+  UserCheck,
+  Users
 } from "lucide-react";
-import Navbar from "@/components/shared/Navbar";
+import { useState } from "react";
+import { AdminSideBar } from "./SideBar";
 
 export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -95,53 +90,6 @@ export default function AdminDashboard() {
     },
   ];
 
-  const students = [
-    {
-      id: 1,
-      name: "John Kamau",
-      admNo: "2023/789",
-      grade: "Grade 8A",
-      status: "active",
-      fees: "Paid",
-      attendance: 92,
-    },
-    {
-      id: 2,
-      name: "Mary Akinyi",
-      admNo: "2023/790",
-      grade: "Grade 7B",
-      status: "active",
-      fees: "Partial",
-      attendance: 96,
-    },
-    {
-      id: 3,
-      name: "David Ochieng",
-      admNo: "2024/123",
-      grade: "Grade 9C",
-      status: "active",
-      fees: "Pending",
-      attendance: 88,
-    },
-    {
-      id: 4,
-      name: "Grace Wanjiru",
-      admNo: "2024/124",
-      grade: "Grade 6A",
-      status: "active",
-      fees: "Paid",
-      attendance: 98,
-    },
-    {
-      id: 5,
-      name: "Peter Mutua",
-      admNo: "2024/125",
-      grade: "Grade 8D",
-      status: "active",
-      fees: "Paid",
-      attendance: 90,
-    },
-  ];
 
   const teachers = [
     {
@@ -371,7 +319,7 @@ export default function AdminDashboard() {
         return (
           <div className="space-y-6">
             {/* Main Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {stats.map((stat, idx) => (
                 <div
                   key={idx}
@@ -537,117 +485,7 @@ export default function AdminDashboard() {
             </div>
           </div>
         );
-      case "students":
-        return (
-          <div className="space-y-6 ">
-            <div className="flex items-center justify-between ">
-              <h2 className="text-2xl font-bold text-gray-800">
-                Student Management
-              </h2>
-              <div className="flex space-x-3">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search students..."
-                    className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
-                  />
-                </div>
-                <button className="flex items-center space-x-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700">
-                  <Plus className="w-5 h-5" />
-                  <span>Add Student</span>
-                </button>
-                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
-                  <Upload className="w-5 h-5" />
-                  <span>Import</span>
-                </button>
-              </div>
-            </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <table className="w-full">
-                <thead className="bg-gray-50 border-b-2">
-                  <tr>
-                    <th className="text-left py-3 px-4 font-bold text-gray-700">
-                      Adm No
-                    </th>
-                    <th className="text-left py-3 px-4 font-bold text-gray-700">
-                      Student Name
-                    </th>
-                    <th className="text-center py-3 px-4 font-bold text-gray-700">
-                      Grade/Class
-                    </th>
-                    <th className="text-center py-3 px-4 font-bold text-gray-700">
-                      Attendance
-                    </th>
-                    <th className="text-center py-3 px-4 font-bold text-gray-700">
-                      Fee Status
-                    </th>
-                    <th className="text-center py-3 px-4 font-bold text-gray-700">
-                      Status
-                    </th>
-                    <th className="text-center py-3 px-4 font-bold text-gray-700">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {students.map((student, idx) => (
-                    <tr key={idx} className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4 font-medium text-gray-600">
-                        {student.admNo}
-                      </td>
-                      <td className="py-3 px-4">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                            <User className="w-5 h-5 text-blue-600" />
-                          </div>
-                          <span className="font-medium text-gray-800">
-                            {student.name}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-3 px-4 text-center text-sm">
-                        {student.grade}
-                      </td>
-                      <td className="py-3 px-4 text-center font-medium">
-                        {student.attendance}%
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${
-                            student.fees === "Paid"
-                              ? "bg-green-100 text-green-700"
-                              : student.fees === "Partial"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-red-100 text-red-700"
-                          }`}
-                        >
-                          {student.fees}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
-                          {student.status}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <div className="flex items-center justify-center space-x-2">
-                          <button className="p-2 hover:bg-gray-100 rounded">
-                            <Edit className="w-4 h-4 text-gray-600" />
-                          </button>
-                          <button className="p-2 hover:bg-gray-100 rounded">
-                            <Trash2 className="w-4 h-4 text-red-600" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
       case "teachers":
         return (
           <div className="space-y-6">
@@ -1442,78 +1280,13 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 w-full">
       {/* Sidebar */}
-      <aside
-        className={`${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-gray-800 to-gray-900 shadow-xl transition-transform duration-300`}
-      >
-        <div className="flex items-center justify-between p-6 border-b border-gray-700">
-          <div className="flex items-center space-x-2">
-            <Shield className="w-8 h-8 text-white" />
-            <span className="text-xl font-bold text-white">Admin Portal</span>
-          </div>
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="lg:hidden text-white"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-
-        <nav className="p-4 space-y-2">
-          {[
-            { id: "overview", label: "Dashboard", icon: Home },
-            { id: "students", label: "Students", icon: Users },
-            { id: "teachers", label: "Teachers", icon: UserCheck },
-            { id: "classes", label: "Classes", icon: BookOpen },
-            { id: "attendance", label: "Attendance", icon: Clock },
-            { id: "fees", label: "Fees Management", icon: DollarSign },
-            { id: "performance", label: "Performance", icon: BarChart3 },
-            { id: "reports", label: "Reports", icon: FileText },
-            { id: "admissions", label: "Admissions", icon: Plus },
-            { id: "events", label: "Events", icon: Calendar },
-            { id: "messages", label: "Messages", icon: MessageSquare },
-            { id: "settings", label: "Settings", icon: Settings },
-          ].map((item) => (
-            <button
-              key={item.id}
-              onClick={() => {
-                setActiveTab(item.id);
-                setSidebarOpen(false); // Close sidebar on mobile after selection
-              }}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
-                activeTab === item.id
-                  ? "bg-white text-gray-900"
-                  : "text-gray-300 hover:bg-gray-700"
-              }`}
-            >
-              <item.icon className="w-5 h-5" />
-              <span className="font-medium">{item.label}</span>
-            </button>
-          ))}
-        </nav>
-
-        {/* User/Logout at the bottom */}
-        <div className="absolute bottom-0 left-0 w-full p-4 border-t border-gray-700">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-gray-900" />
-              </div>
-              <span className="text-sm font-medium text-white">Admin User</span>
-            </div>
-            <button className="p-2 hover:bg-gray-700 rounded-full text-gray-300">
-              <LogOut className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </aside>
+      <AdminSideBar />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden ">
-        <Navbar setSidebarOpen={setSidebarOpen} />
+        <Navbar />
 
         {/* Content Area */}
         <main className="flex-1 overflow-y-auto p-6">
