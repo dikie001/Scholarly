@@ -1,28 +1,24 @@
-import React from "react";
-import {
-  Menu,
-  Search,
-  Users,
-  Clock,
-  UserCheck,
-  Activity,
-  DollarSign,
-  Edit,
-  Trash2,
-} from "lucide-react";
-import { AdminSideBar } from "../../SideBar";
-import { useSidebar } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { useSidebar } from "@/components/ui/sidebar";
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
+import {
+  Clock,
+  Edit,
+  Menu,
+  Search,
+  Trash2,
+  UserCheck
+} from "lucide-react";
+import { AdminSideBar } from "../../SideBar";
 
 const AttendancePage = () => {
   const { toggleSidebar, setOpen } = useSidebar();

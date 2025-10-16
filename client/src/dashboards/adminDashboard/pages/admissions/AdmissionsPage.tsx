@@ -1,29 +1,15 @@
-import React, { useState } from "react";
-import {
-  Plus,
-  Search,
-  Download,
-  Eye,
-  CheckCircle,
-  XCircle,
-  Clock,
-  FileText,
-  Menu,
-  Upload,
-} from "lucide-react";
-import { AdminSideBar } from "../../SideBar";
-import { useSidebar } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -31,15 +17,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSidebar } from "@/components/ui/sidebar";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  CheckCircle,
+  Clock,
+  Eye,
+  FileText,
+  Menu,
+  Plus,
+  Search,
+  Upload,
+  XCircle
+} from "lucide-react";
+import React, { useState } from "react";
+import { AdminSideBar } from "../../SideBar";
 
 interface Application {
   id: number;
