@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/tooltip";
 import {
   BarChart3,
-  BookMarked,
   BookOpen,
   Calendar,
   Clock,
@@ -33,8 +32,7 @@ import {
   Settings,
   UserCheck,
   Users,
-  ChevronDown,
-  type LucideIcon,
+  type LucideIcon
 } from "lucide-react";
 
 interface NavItem {
@@ -54,14 +52,29 @@ const navCategories: NavCategory[] = [
     label: "MANAGEMENT",
     items: [
       { id: "overview", label: "Dashboard", icon: Home, href: "/dashboard" },
-      { id: "students", label: "Students", icon: Users, href: "/admin/students" },
-      { id: "teachers", label: "Teachers", icon: UserCheck, href: "/teachers" },
-      { id: "classes", label: "Classes", icon: BookOpen, href: "/classes" },
+      {
+        id: "students",
+        label: "Students",
+        icon: Users,
+        href: "/admin/students",
+      },
+      {
+        id: "teachers",
+        label: "Teachers",
+        icon: UserCheck,
+        href: "/admin/teachers",
+      },
+      {
+        id: "classes",
+        label: "Classes",
+        icon: BookOpen,
+        href: "/admin/classes",
+      },
       {
         id: "admissions",
         label: "Admissions",
         icon: Plus,
-        href: "/admissions",
+        href: "/admin/admissions",
       },
     ],
   },
@@ -113,8 +126,10 @@ export const AdminSideBar = () => {
         {/* Logo */}
         <SidebarGroup>
           <SidebarGroupLabel>
-            <div >
-              {open && <span className="font-semibold text-lg ">School Admin</span>}
+            <div>
+              {open && (
+                <span className="font-semibold text-lg ">School Admin</span>
+              )}
             </div>
           </SidebarGroupLabel>
           <SidebarTrigger className={`${open ? "absolute right-4" : ""}`} />
@@ -122,9 +137,8 @@ export const AdminSideBar = () => {
 
         {/* Categories */}
         {navCategories.map((category) => (
-          <SidebarGroup key={category.label} >
-            
-            <SidebarGroupLabel >
+          <SidebarGroup key={category.label}>
+            <SidebarGroupLabel>
               {/* <ChevronDown className="h-4 w-4" /> */}
               {open && <span>{category.label}</span>}
             </SidebarGroupLabel>

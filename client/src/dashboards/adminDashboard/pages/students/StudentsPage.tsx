@@ -1,4 +1,3 @@
-"use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +15,7 @@ import { Edit, Menu, Plus, Search, Trash2, Upload, User } from "lucide-react";
 import { AdminSideBar } from "../../SideBar";
 
 const Students = () => {
-  const { open, toggleSidebar,setOpen } = useSidebar();
+  const { toggleSidebar, setOpen } = useSidebar();
 
   const students = [
     {
@@ -67,30 +66,33 @@ const Students = () => {
   ];
 
   return (
-    <div className="flex min-h-screen bg-background  ">
+    <div className="flex min-h-screen bg-background w-full">
       <AdminSideBar />
-      <div className={`flex-1 p-4 transition-all duration-300 ease-in-out `}>
-        {/* Navbar / Header */}
-        <header className="flex  items-center gap-4 border-b pt-2 pb-4 px-2">
+
+      <div className="flex-1 p-4 transition-all duration-300 ease-in-out">
+        {/* Header */}
+        <header className="flex items-center gap-4 border-b pt-2 pb-4 px-2">
           <Menu
             onClick={() => {
               toggleSidebar();
               setOpen(true);
             }}
             size={18}
-            className="cursor-pointer"
+            className="cursor-pointer md:hidden"
           />
           <h2 className="text-2xl font-bold tracking-tight">
             Student Management
           </h2>
         </header>
 
-        <div className="flex items-center justify-between max-sm:flex-col  gap-2 max-w-screen w-[90%] mt-4">
+        {/* Controls */}
+        <div className="flex items-center justify-between max-sm:flex-col max-w-screen w-[95%] mt-4">
           <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search students..." className="pl-9  " />
+            <Input placeholder="Search students..." className="pl-9" />
           </div>
-          <div className="flex gap-4 mr-4 items-center justify-center">
+
+          <div className="flex gap-4 items-center justify-center max-md:mt-3">
             <Button className="flex cursor-pointer items-center gap-2 max-sm:w-full">
               <Plus className="h-4 w-4" /> Add Student
             </Button>
@@ -103,11 +105,12 @@ const Students = () => {
           </div>
         </div>
 
-        {/* Table Section */}
-        <Card className="mt-6 max-w-screen w-[95%] ">
+        {/* Table */}
+        <Card className="mt-6 max-w-screen w-[95%]">
           <CardHeader>
             <CardTitle>Student List</CardTitle>
           </CardHeader>
+
           <CardContent>
             <Table>
               <TableHeader>
@@ -121,6 +124,7 @@ const Students = () => {
                   <TableHead className="text-center">Actions</TableHead>
                 </TableRow>
               </TableHeader>
+
               <TableBody>
                 {students.map((student) => (
                   <TableRow key={student.id}>
