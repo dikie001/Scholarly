@@ -35,32 +35,58 @@ const NotificationModal = ({ open, onClose }: NotificationModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-md rounded-2xl">
+      <DialogContent
+        className="
+          max-w-md 
+          rounded-2xl 
+          border 
+          border-border 
+          bg-background 
+          text-foreground 
+          shadow-xl 
+          dark:border-gray-700
+        "
+      >
         <DialogHeader>
-          <DialogTitle className="flex items-center space-x-2">
-            <Bell className="w-5 h-5 text-blue-600" />
+          <DialogTitle className="flex items-center space-x-2 text-lg font-semibold">
+            <Bell className="w-5 h-5 text-primary" />
             <span>Notifications</span>
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-sm text-muted-foreground">
             Stay up to date with the latest updates and alerts.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-3 max-h-60 overflow-y-auto">
+        <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
           {notifications.map((note, idx) => (
             <div
               key={idx}
-              className="p-3 rounded-lg border hover:bg-gray-50 transition"
+              className="
+                p-3 
+                rounded-lg 
+                border 
+                border-border 
+                bg-card 
+                hover:bg-muted/60 
+                transition-colors 
+                dark:hover:bg-muted/30
+              "
             >
-              <p className="font-medium text-gray-800">{note.title}</p>
-              <p className="text-sm text-gray-600">{note.description}</p>
-              <p className="text-xs text-gray-400">{note.time}</p>
+              <p className="font-medium text-foreground">{note.title}</p>
+              <p className="text-sm text-muted-foreground">
+                {note.description}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">{note.time}</p>
             </div>
           ))}
         </div>
 
         <DialogFooter>
-          <Button variant="secondary" className="cursor-pointer " onClick={onClose}>
+          <Button
+            variant="secondary"
+            className="w-full sm:w-auto"
+            onClick={onClose}
+          >
             Close
           </Button>
         </DialogFooter>

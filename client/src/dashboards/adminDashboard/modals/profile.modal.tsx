@@ -4,8 +4,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Sun, Moon, Monitor, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useTheme } from "@/components/shared/ThemeProvider";
+import { LogOut, Monitor, Moon, Sun, User } from "lucide-react";
 
 interface ProfileModalProps {
   open: boolean;
@@ -13,42 +15,80 @@ interface ProfileModalProps {
 }
 
 const ProfileModal = ({ open, onClose }: ProfileModalProps) => {
+  const { setTheme } = useTheme();
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
         style={{ inset: "17rem -8rem auto auto" }}
-        className="max-w-xs p-0 rounded-xl w-74  absolute top-10 "
+        className=" w-72 rounded-xl border bg-background shadow-md p-0"
+        onInteractOutside={onClose}
       >
-        <DialogHeader className="p-4 border-b">
+        <DialogHeader className="p-4 border-b -mb-1">
           <DialogTitle className="text-base font-semibold">
             Dickens Omondi
           </DialogTitle>
-          <p className="text-sm text-gray-500">omondidickens255@gmail.com</p>
+          <p className="text-sm text-muted-foreground">
+            omondidickens255@gmail.com
+          </p>
         </DialogHeader>
 
         <div className="p-2 space-y-1">
-          <button className="flex items-center w-full gap-3 px-3 py-1 text-sm text-gray-700 rounded-md hover:bg-gray-100">
+          <Button
+            variant="ghost"
+            onClick={() => {
+              onClose();
+            }}
+            className="w-full cursor-pointer justify-start gap-3 -mt-4 -mb-2  text-sm"
+          >
             <User className="w-4 h-4" /> Profile
-          </button>
+          </Button>
 
-          <div className="border-t my-2" />
+          <Separator className="my-2" />
 
-          <p className="text-xs uppercase text-gray-400 px-3">Theme</p>
-          <button className="flex items-center w-full gap-3 px-3 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100">
+          <p className="text-xs uppercase text-muted-foreground px-3">Theme</p>
+          <Button
+            variant="ghost"
+            className="w-full cursor-pointer justify-start gap-3 text-sm"
+            onClick={() => {
+              setTheme("light");
+              onClose();
+            }}
+          >
             <Sun className="w-4 h-4" /> Light
-          </button>
-          <button className="flex items-center w-full gap-3 px-3 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100">
+          </Button>
+          <Button
+            variant="ghost"
+            className="w-full cursor-pointer justify-start gap-3 text-sm"
+            onClick={() => {
+              setTheme("dark");
+              onClose();
+            }}
+          >
             <Moon className="w-4 h-4" /> Dark
-          </button>
-          <button className="flex items-center w-full gap-3 px-3 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100">
+          </Button>
+          <Button
+            variant="ghost"
+            className="w-full cursor-pointer justify-start gap-3 text-sm"
+            onClick={() => {
+              setTheme("system");
+              onClose();
+            }}
+          >
             <Monitor className="w-4 h-4" /> System
-          </button>
+          </Button>
 
-          <div className="border-t my-2" />
+          <Separator className="my-2" />
 
-          <button className="flex items-center w-full gap-3 px-3 py-2 text-sm text-red-600 rounded-md hover:bg-red-50">
+          <Button
+            variant="ghost"
+            onClick={() => {
+              onClose();
+            }}
+            className="w-full cursor-pointer justify-start gap-3 text-sm text-destructive hover:text-destructive"
+          >
             <LogOut className="w-4 h-4" /> Sign out
-          </button>
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

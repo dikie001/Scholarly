@@ -73,7 +73,7 @@ const TeachersPage = () => {
   ];
 
   return (
-    <div className="flex min-h-screen bg-background w-full">
+    <div className="flex min-h-screen w-full">
       <AdminSideBar />
 
       <div className="flex-1  transition-all duration-300 ease-in-out">
@@ -89,7 +89,7 @@ const TeachersPage = () => {
             </div>
 
             <div className="flex gap-4 items-center justify-center max-md:mt-3">
-              <Button className="flex cursor-pointer items-center gap-2 max-sm:w-full">
+              <Button className="flex dark:text-white cursor-pointer items-center gap-2 max-sm:w-full">
                 <Plus className="h-4 w-4" /> Add Teacher
               </Button>
               <Button
@@ -142,7 +142,7 @@ const TeachersPage = () => {
                         {teacher.students}
                       </TableCell>
                       <TableCell className="text-center">
-                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900 dark:text-green-300 text-green-700 rounded-full text-xs font-medium">
                           {teacher.status}
                         </span>
                       </TableCell>

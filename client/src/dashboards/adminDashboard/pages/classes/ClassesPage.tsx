@@ -78,7 +78,7 @@ const ClassesPage = () => {
             </div>
             {/* Add, Import */}
             <div className="flex gap-4  items-center justify-center max-md:mt-3 ">
-              <Button className="flex cursor-pointer items-center gap-2 max-sm:w-full">
+              <Button className="flex dark:text-foreground cursor-pointer items-center gap-2 max-sm:w-full">
                 <Plus className="h-4 w-4" /> Add Class
               </Button>
               <Button

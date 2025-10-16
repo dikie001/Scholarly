@@ -3,12 +3,14 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App.tsx'
 import { SidebarProvider } from './components/ui/sidebar.tsx'
 import './index.css'
+import { ThemeProvider } from './components/shared/ThemeProvider.tsx'
 
 createRoot(document.getElementById("root")!).render(
-  <Router>
-    <SidebarProvider>
-      {" "}
-      <App />
-    </SidebarProvider>
-  </Router>
+  <ThemeProvider>
+    <Router>
+      <SidebarProvider>
+        <App />
+      </SidebarProvider>
+    </Router>
+  </ThemeProvider>
 );
