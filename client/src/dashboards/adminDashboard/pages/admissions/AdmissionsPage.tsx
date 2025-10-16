@@ -9,6 +9,7 @@ import {
   Clock,
   FileText,
   Menu,
+  Upload,
 } from "lucide-react";
 import { AdminSideBar } from "../../SideBar";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -190,21 +191,21 @@ const AdmissionsPage: React.FC = () => {
             </Select>
           </div>
 
-          <div className="flex gap-3  justify-center items-center  ">
-            <Button className="flex items-center gap-2 w-full">
+          <div className="flex gap-3 justify-center items-center ">
+            <Button className="flex items-center gap-2 max-md:w-[96%]">
               <Plus className="h-4 w-4" /> New Admission
             </Button>
             <Button
               variant="outline"
-              className="flex items-center gap-2 w-full"
+              className="flex items-center gap-2 max-md:w-[96%]"
             >
-              <Download className="h-4 w-4" /> Export
+              <Upload className="h-4 w-4" /> Export
             </Button>
           </div>
         </div>
 
         {/* Table */}
-        <Card className="mt-6 max-w-screen w-[95%] px-2">
+        <Card className="mt-6 max-w-screen  px-2">
           <CardHeader>
             <CardTitle>Applications</CardTitle>
           </CardHeader>

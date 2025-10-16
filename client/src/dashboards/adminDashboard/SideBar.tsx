@@ -51,7 +51,7 @@ const navCategories: NavCategory[] = [
   {
     label: "MANAGEMENT",
     items: [
-      { id: "overview", label: "Dashboard", icon: Home, href: "/dashboard" },
+      { id: "overview", label: "Dashboard", icon: Home, href: "/admin_dashboard" },
       {
         id: "students",
         label: "Students",
