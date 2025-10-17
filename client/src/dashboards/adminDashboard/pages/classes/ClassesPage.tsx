@@ -150,7 +150,7 @@ const ClassesPage = () => {
       </div>
 
       {/* MODALS */}
-      {showAddClassModal && <AddClassModal/>}
+      {showAddClassModal && <AddClassModal o/>}
     </div>
   );
 };

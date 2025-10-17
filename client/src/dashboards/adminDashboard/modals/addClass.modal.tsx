@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,9 +19,14 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-// import { toast } from "@/components/ui/use-toast";
 
-export default function AddClassModal() {
+export default function AddClassModal({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   const [form, setForm] = useState({
     className: "",
     classTeacher: "",
@@ -40,18 +44,13 @@ export default function AddClassModal() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // toast({
-    //   title: "✅ Class Added Successfully",
-    //   description: `${form.className} (${form.gradeLevel}) created.`,
-    // });
+    // Add logic or toast here if needed
     setForm({ className: "", classTeacher: "", gradeLevel: "", stream: "" });
+    onClose();
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="bg-primary hover:bg-primary/80">Add Class</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg bg-popover text-popover-foreground">
         <DialogHeader>
           <DialogTitle>Add Class</DialogTitle>
