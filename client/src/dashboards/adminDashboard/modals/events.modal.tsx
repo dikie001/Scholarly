@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,7 +21,12 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-export default function AddEventModal() {
+interface AddEventModalProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export default function AddEventModal({ open, onClose }: AddEventModalProps) {
   const [form, setForm] = useState({
     title: "",
     date: "",
@@ -41,7 +45,7 @@ export default function AddEventModal() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     setForm({
       title: "",
       date: "",
@@ -50,16 +54,11 @@ export default function AddEventModal() {
       category: "",
       description: "",
     });
+    onClose();
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-          Add Event
-        </Button>
-      </DialogTrigger>
-
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg bg-background text-foreground border border-border shadow-lg">
         <DialogHeader>
           <DialogTitle>Add Calendar Event</DialogTitle>
