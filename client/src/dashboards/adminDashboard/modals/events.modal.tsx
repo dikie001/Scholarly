@@ -21,7 +21,6 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
 
 export default function AddEventModal() {
   const [form, setForm] = useState({
@@ -35,20 +34,14 @@ export default function AddEventModal() {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  ) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSelectChange = (field: string, value: string) => {
+  const handleSelectChange = (field: string, value: string) =>
     setForm({ ...form, [field]: value });
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "📅 Event Added",
-      description: `${form.title} scheduled for ${form.date}`,
-    });
+  
     setForm({
       title: "",
       date: "",
@@ -62,19 +55,21 @@ export default function AddEventModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-primary hover:bg-primary/80">Add Event</Button>
+        <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+          Add Event
+        </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-lg bg-popover text-popover-foreground">
+      <DialogContent className="sm:max-w-lg bg-background text-foreground border border-border shadow-lg">
         <DialogHeader>
           <DialogTitle>Add Calendar Event</DialogTitle>
           <DialogDescription>
-            Fill out the event details below.
+            Fill in the event details to create a new calendar entry.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="flex flex-col space-y-2">
+          <div className="space-y-2">
             <Label htmlFor="title">Event Title</Label>
             <Input
               id="title"
@@ -87,7 +82,7 @@ export default function AddEventModal() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="flex flex-col space-y-2">
+            <div className="space-y-2">
               <Label htmlFor="date">Date</Label>
               <Input
                 id="date"
@@ -98,7 +93,7 @@ export default function AddEventModal() {
                 required
               />
             </div>
-            <div className="flex flex-col space-y-2">
+            <div className="space-y-2">
               <Label>Category</Label>
               <Select
                 onValueChange={(v) => handleSelectChange("category", v)}
@@ -118,7 +113,7 @@ export default function AddEventModal() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="flex flex-col space-y-2">
+            <div className="space-y-2">
               <Label htmlFor="startTime">Start Time</Label>
               <Input
                 id="startTime"
@@ -129,8 +124,7 @@ export default function AddEventModal() {
                 required
               />
             </div>
-
-            <div className="flex flex-col space-y-2">
+            <div className="space-y-2">
               <Label htmlFor="endTime">End Time</Label>
               <Input
                 id="endTime"
@@ -143,7 +137,7 @@ export default function AddEventModal() {
             </div>
           </div>
 
-          <div className="flex flex-col space-y-2">
+          <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
               id="description"

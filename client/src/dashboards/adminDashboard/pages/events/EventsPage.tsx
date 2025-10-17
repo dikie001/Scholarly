@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Calendar,
   Plus,
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const EventsPage = () => {
+  const [showEventsModal, setShowEventsModal] = useState(false);
   const events = [
     {
       date: "Oct 20",
@@ -55,7 +56,7 @@ const EventsPage = () => {
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search events..." className="pl-9" />
             </div>
-            <Button className="flex items-center gap-2 bg-primary text-white hover:bg-primary/90">
+            <Button onClick={()=>setShowEventsModal(true)} className="flex items-center gap-2 bg-primary text-white hover:bg-primary/90">
               <Plus className="w-5 h-5" />
               Add Event
             </Button>
