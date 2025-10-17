@@ -98,7 +98,7 @@ export default function AddEventModal({ open, onClose }: AddEventModalProps) {
                 onValueChange={(v) => handleSelectChange("category", v)}
                 value={form.category}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>

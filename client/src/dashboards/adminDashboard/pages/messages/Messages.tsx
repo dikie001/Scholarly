@@ -3,16 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-    Activity,
-    Edit,
-    Inbox,
-    MessageSquare,
-    Search,
-    Send,
+  Activity,
+  Edit,
+  Inbox,
+  MessageSquare,
+  Search,
+  Send,
 } from "lucide-react";
 import { AdminSideBar } from "../../SideBar";
+import { useState } from "react";
+import MessageModal from "../../modals/message.modal";
 
 const MessagesPage = () => {
+  const [showMessageModal, setShowMessageModal] = useState(false);
   const messages = [
     {
       recipient: "All Parents",
@@ -48,7 +51,10 @@ const MessagesPage = () => {
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search messages..." className="pl-9" />
             </div>
-            <Button className="flex items-center gap-2 bg-primary text-white hover:bg-primary/90">
+            <Button
+              onClick={() => setShowMessageModal(true)}
+              className="flex items-center gap-2 bg-primary text-white hover:bg-primary/90"
+            >
               <Edit className="w-5 h-5" />
               Compose Message
             </Button>
@@ -163,6 +169,14 @@ const MessagesPage = () => {
           </div>
         </div>
       </div>
+
+      {/* MODALS */}
+      {showMessageModal && (
+        <MessageModal
+          open={showMessageModal}
+          onClose={() => setShowMessageModal(false)}
+        />
+      )}
     </div>
   );
 };
