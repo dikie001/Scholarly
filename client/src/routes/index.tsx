@@ -18,6 +18,8 @@ import EventsPage from "@/dashboards/adminDashboard/pages/events/EventsPage";
 import SettingsPage from "@/dashboards/adminDashboard/pages/settings/SettingsPage";
 import MessagesPage from "@/dashboards/adminDashboard/pages/messages/Messages";
 import AddStudentForm from "@/dashboards/adminDashboard/modals/addStudentModal";
+import StudentRegistration from "@/dashboards/adminDashboard/pages/students/AddStudent";
+import AddTeachersPage from "@/dashboards/adminDashboard/pages/teachers/AddTeachers";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -40,7 +42,8 @@ const AppRoutes = () => {
       <Route path="/admin/fees" element={<FeesPage />} />{" "}
       <Route path="/admin/settings" element={<SettingsPage />} />{" "}
       <Route path="/admin/messages" element={<MessagesPage />} />{" "}
-      <Route path="/admin/addStudent" element={<AddStudentForm />} />
+      <Route path="/admin/addStudent" element={<StudentRegistration />} />
+      <Route path="/admin/addTeacher" element={<AddTeachersPage />} />
       <Route path="/principal_dashboard" element={<PrincipalDashboard />} />
     </Routes>
   );

@@ -10,16 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Edit,
-  Plus,
-  Search,
-  Trash2,
-  Upload
-} from "lucide-react";
+import { Edit, Plus, Search, Trash2, Upload } from "lucide-react";
 import { AdminSideBar } from "../../SideBar";
+import { useState } from "react";
+import AddClassModal from "../../modals/addClass.modal";
 
 const ClassesPage = () => {
+  const [showAddClassModal, setShowAddClassModal] = useState(false);
 
   const classes = [
     {
@@ -68,7 +65,7 @@ const ClassesPage = () => {
     <div className="flex min-h-screen bg-background max-w-screen flex-wrap w-full">
       <AdminSideBar />
       <div className="flex-1  transition-all duration-300 ease-in-out max-w-full w-full">
-        <Navbar pageName="Class Management"/>
+        <Navbar pageName="Class Management" />
         <div className="p-4">
           {/* Controls */}
           <div className="flex items-center justify-between max-sm:flex-col  max-w-screen  mt-2">
@@ -78,7 +75,7 @@ const ClassesPage = () => {
             </div>
             {/* Add, Import */}
             <div className="flex gap-4  items-center justify-center max-md:mt-3 ">
-              <Button className="flex dark:text-foreground cursor-pointer items-center gap-2 max-sm:w-full">
+              <Button onClick={()=>setShowAddClassModal(true)} className="flex dark:text-foreground cursor-pointer items-center gap-2 max-sm:w-full">
                 <Plus className="h-4 w-4" /> Add Class
               </Button>
               <Button
@@ -151,6 +148,9 @@ const ClassesPage = () => {
           </Card>
         </div>
       </div>
+
+      {/* MODALS */}
+      {showAddClassModal && <AddClassModal/>}
     </div>
   );
 };
