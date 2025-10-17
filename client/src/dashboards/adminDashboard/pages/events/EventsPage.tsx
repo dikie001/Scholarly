@@ -12,6 +12,7 @@ import { AdminSideBar } from "../../SideBar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import AddEventModal from "../../modals/events.modal";
 
 const EventsPage = () => {
   const [showEventsModal, setShowEventsModal] = useState(false);
@@ -63,7 +64,7 @@ const EventsPage = () => {
           </div>
 
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6">
             <Card className="text-center">
               <CardContent className="p-6">
                 <CalendarDays className="w-8 h-8 text-blue-600 mx-auto mb-3" />
@@ -136,6 +137,9 @@ const EventsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* MODALS */}
+      {showEventsModal && <AddEventModal open={showEventsModal} onClose={()=>setShowEventsModal(false)}/>}
     </div>
   );
 };
