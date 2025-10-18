@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AdminSideBar } from "../../SideBar";
+import { AdminSideBar } from "../../../../components/shared/SideBar";
 
 const PerformancePage = () => {
   const performanceData = [

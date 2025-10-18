@@ -35,10 +35,10 @@ import {
   Plus,
   Search,
   Upload,
-  XCircle
+  XCircle,
 } from "lucide-react";
 import React, { useState } from "react";
-import { AdminSideBar } from "../../SideBar";
+import { AdminSideBar } from "../../../../components/shared/SideBar";
 
 interface Application {
   id: number;
@@ -129,7 +129,7 @@ const AdmissionsPage: React.FC = () => {
       <AdminSideBar />
       <div className="flex-1  transition-all duration-300 ease-in-out max-w-full w-full overflow-auto">
         {/* Navbar */}
-        <Navbar pageName="Admissions & Enrollment"/>
+        <Navbar pageName="Admissions & Enrollment" />
         <div className="p-4">
           {/* Stats */}
           <div className="grid gap-4 grid-cols-2  lg:grid-cols-4 mt-2 w-full px-2">

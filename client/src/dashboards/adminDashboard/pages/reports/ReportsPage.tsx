@@ -10,7 +10,7 @@ import Navbar from "@/components/shared/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { AdminSideBar } from "../../SideBar";
+import { AdminSideBar } from "../../../../components/shared/SideBar";
 import { Search } from "lucide-react";
 
 const ReportsPage = () => {

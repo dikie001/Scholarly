@@ -1,5 +1,5 @@
 import Navbar from "@/components/shared/Navbar";
-import { AdminSideBar } from "./SideBar";
+import { AdminSideBar } from "../../components/shared/SideBar";
 import {
   Activity,
   AlertCircle,

@@ -11,10 +11,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Edit, Search, Trash2, UserCheck } from "lucide-react";
-import { AdminSideBar } from "../../SideBar";
+import { AdminSideBar } from "../../../../components/shared/SideBar";
 
 const AttendancePage = () => {
-
   const attendanceSummary = [
     {
       grade: "Grade 9",

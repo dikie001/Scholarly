@@ -10,7 +10,7 @@ import {
   Search,
   Send,
 } from "lucide-react";
-import { AdminSideBar } from "../../SideBar";
+import { AdminSideBar } from "../../../../components/shared/SideBar";
 import { useState } from "react";
 import MessageModal from "../../modals/message.modal";
 

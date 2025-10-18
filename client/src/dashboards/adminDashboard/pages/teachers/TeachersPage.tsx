@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Edit, Plus, Search, Trash2, Upload, UserCheck } from "lucide-react";
-import { AdminSideBar } from "../../SideBar";
+import { AdminSideBar } from "../../../../components/shared/SideBar";
 import { useNavigate } from "react-router-dom";
 
 const TeachersPage = () => {

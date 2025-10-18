@@ -126,7 +126,10 @@ export const AdminSideBar = () => {
   const { open } = useSidebar(); 
 
   return (
-    <Sidebar collapsible="icon" className="transition-all ease-in-out duration-300">
+    <Sidebar
+      collapsible="icon"
+      className="transition-all ease-in-out duration-300"
+    >
       <SidebarContent>
         {/* Logo */}
         <SidebarGroup>
@@ -137,7 +140,9 @@ export const AdminSideBar = () => {
               )}
             </div>
           </SidebarGroupLabel>
-          <SidebarTrigger className={`${open ? "absolute right-4" : "mt-4"}`} />
+          <SidebarTrigger
+            className={`cursor-e-resize ${open ? "absolute right-4 " : "mt-4"}`}
+          />
         </SidebarGroup>
 
         {/* Categories */}
@@ -150,25 +155,28 @@ export const AdminSideBar = () => {
 
             <SidebarGroupContent>
               <SidebarMenu>
-                <TooltipProvider >
+                <TooltipProvider>
                   {category.items.map((item) => {
                     const active = pathname === item.href;
                     return (
                       <SidebarMenuItem key={item.id}>
-                        <Tooltip  >
-                          <TooltipTrigger asChild >
-                            <SidebarMenuButton asChild isActive={active} >
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <SidebarMenuButton asChild isActive={active}>
                               <a
                                 href={item.href}
                                 className="flex items-center gap-2 "
                               >
                                 <item.icon className="h-5 w-5 " />
-                                {open && <span >{item.label}</span>}
+                                {open && <span>{item.label}</span>}
                               </a>
                             </SidebarMenuButton>
                           </TooltipTrigger>
                           {!open && (
-                            <TooltipContent side="right" className="bg-primary ">
+                            <TooltipContent
+                              side="right"
+                              className="bg-primary "
+                            >
                               {item.label}
                             </TooltipContent>
                           )}
@@ -186,7 +194,10 @@ export const AdminSideBar = () => {
       <SidebarFooter className="mb-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={pathname === "/admin/settings"} >
+            <SidebarMenuButton
+              asChild
+              isActive={pathname === "/admin/settings"}
+            >
               <a href="/admin/settings" className="flex items-center gap-2">
                 <Settings className="h-5 w-5" />
                 {open && <span>Settings</span>}

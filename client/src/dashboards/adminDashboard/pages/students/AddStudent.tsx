@@ -19,7 +19,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { User, Calendar, BookOpen, Users, Circle } from "lucide-react";
-import { AdminSideBar } from "../../SideBar";
+import { AdminSideBar } from "../../../../components/shared/SideBar";
 import Navbar from "@/components/shared/Navbar";
 import type { addStudentFormTypes } from "@/types/student.types";
 

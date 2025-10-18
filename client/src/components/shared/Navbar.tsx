@@ -24,7 +24,7 @@ const Navbar: React.FC<navbarPropTypes> = ({ pageName }) => {
           }}
           className="md:hidden"
         >
-          <Menu className="h-5 w-5 text-foreground" />
+          <Menu className="h-5 w-5 text-foreground cursor-pointer" />
         </Button>
 
         <h2 className="text-2xl font-bold tracking-tight text-foreground">
@@ -47,9 +47,9 @@ const Navbar: React.FC<navbarPropTypes> = ({ pageName }) => {
 
         {/* Profile */}
         <Button
-          variant="ghost"
+          variant='secondary'
           size="icon"
-          className="rounded-full bg-primary text-primary-foreground cursor-pointer"
+          className="rounded-full bg-primary-foreground cursor-pointer"
           onClick={() => setShowProfileModal(true)}
         >
           <User className="h-5 w-5" />

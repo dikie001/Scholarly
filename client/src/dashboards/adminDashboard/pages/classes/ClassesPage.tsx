@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Edit, Plus, Search, Trash2, Upload } from "lucide-react";
-import { AdminSideBar } from "../../SideBar";
+import { AdminSideBar } from "../../../../components/shared/SideBar";
 import { useState } from "react";
 import AddClassModal from "../../modals/addClass.modal";
 
