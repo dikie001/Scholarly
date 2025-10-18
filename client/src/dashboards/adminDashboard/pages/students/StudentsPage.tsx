@@ -85,7 +85,7 @@ const Students = () => {
 
             <div className="flex gap-4 items-center justify-center max-md:mt-3">
               <Button
-                onClick={() => setShowAddStudentModal(true)}
+                onClick={() => navigate("/admin/addStudent")}
                 className="flex cursor-pointer dark:text-foreground items-center gap-2 max-sm:w-full"
               >
                 <Plus className="h-4 w-4" /> Add Student

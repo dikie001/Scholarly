@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import Navbar from "@/components/shared/Navbar";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import {
   Select,
   SelectContent,
@@ -17,27 +18,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Progress } from "@/components/ui/progress";
-import { User, Calendar, BookOpen, Users, Circle } from "lucide-react";
-import { AdminSideBar } from "../../../../components/shared/SideBar";
-import Navbar from "@/components/shared/Navbar";
 import type { addStudentFormTypes } from "@/types/student.types";
+import { getCounties } from "kenya-locations";
+import { BookOpen, Calendar, Circle, User, Users } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { AdminSideBar } from "../../../../components/shared/SideBar";
 
 export default function StudentRegistration() {
   const [currentStep, setCurrentStep] = useState(0);
   const [completionPercentage, setCompletionPercentage] = useState(0);
+  const [counties, setCounties] = useState<any>();
   const [formData, setFormData] = useState<addStudentFormTypes>({
     firstName: "",
     lastName: "",
     dateOfBirth: new Date(),
-    gender: "other",
-    admissionNumber: 0,
+    gender: "",
+    admissionNumber: null,
     grade: "",
     stream: "",
     parentName: "",
     parentEmail: "",
-    parentPhone: 0,
-    alternatePhone: 0,
+    parentPhone: null,
+    alternatePhone: null,
     address: "",
     medicalInfo: "",
     previousSchool: "",
@@ -98,17 +101,48 @@ export default function StudentRegistration() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Make syre to work on this!!!!!!!!!!
+    if (name === "residence") {
+      const counties = getCounties();
+      setCounties(counties);
+    }
   };
 
   const handleSelectChange = (name: string, value: string) =>
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-  const handleNext = () =>
+  const handleNext = () => {
+    // Validate if first step is complete
+    const step1Complete =
+      formData.firstName.trim() !== "" && formData.lastName.trim() !== "";
+    !formData.dateOfBirth && formData.gender.trim() !== "";
+
+    // Validate if step2 is complete
+    const step2Complete =
+      formData.grade.trim() !== "" &&
+      formData.stream.trim() !== "" &&
+      formData.admissionNumber.trim() !== null &&
+      formData.residence.trim() !== "";
+
+    // validat if step 3 is complete
+    const step3Complete =
+      formData.parentName !== "" && formData.parentPhone !== null;
+
+    if (currentStep === 0 && !step1Complete) {
+      return toast.error("Fill all fields in this section 1");
+    } else if (currentStep === 1 && !step2Complete) {
+      return toast.error("Fill all fields in this section 2");
+    } else if (currentStep === 2 && !step3Complete) {
+      return toast.error("Fill all fields in this section 3");
+    }
+
     currentStep < steps.length - 1 && setCurrentStep((prev) => prev + 1);
+  };
   const handlePrevious = () =>
     currentStep > 0 && setCurrentStep((prev) => prev - 1);
   const handleSubmit = () =>
-    alert("Student registration submitted successfully!");
+    toast("Student registration submitted successfully!");
 
   const renderStepContent = () => {
     const inputClass =
