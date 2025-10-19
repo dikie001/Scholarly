@@ -12,7 +12,7 @@ import { AlertTriangle, Home, Mail, Search } from "lucide-react";
 
 export default function NotFoundPage(){
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900 text-slate-100 p-6">
+    <div className="min-h-screen flex items-center justify-center mx-auto text-slate-100 p-6">
       <Card className="w-full max-w-3xl shadow-2xl">
         <CardHeader className="flex flex-row items-start gap-4">
           <div className="rounded-md p-3 bg-red-600/10 text-red-400">
@@ -62,7 +62,7 @@ export default function NotFoundPage(){
               </div>
 
               <div className="flex flex-wrap gap-2">
-                <Button>
+                <Button className="text-foreground cursor-pointer">
                   <Home className="mr-2 h-4 w-4" />
                   Go to Dashboard
                 </Button>

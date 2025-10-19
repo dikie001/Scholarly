@@ -20,6 +20,7 @@ import MessagesPage from "@/dashboards/adminDashboard/pages/messages/Messages";
 import AddStudentForm from "@/dashboards/adminDashboard/modals/addStudentModal";
 import StudentRegistration from "@/dashboards/adminDashboard/pages/students/AddStudent";
 import AddTeachersPage from "@/dashboards/adminDashboard/pages/teachers/AddTeachers";
+import NotFoundPage from "@/pages/NotFound";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -45,6 +46,8 @@ const AppRoutes = () => {
       <Route path="/admin/addStudent" element={<StudentRegistration />} />
       <Route path="/admin/addTeacher" element={<AddTeachersPage />} />
       <Route path="/principal_dashboard" element={<PrincipalDashboard />} />
+      {/* Not Found Route */}
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

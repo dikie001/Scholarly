@@ -214,7 +214,7 @@ export default function StudentRegistration() {
                     <SelectTrigger className={selectClass}>
                       <SelectValue placeholder="Select gender" />
                     </SelectTrigger>
-                    <SelectContent className={selectContent}>
+                    <SelectContent>
                       {["male", "female", "other"].map((g) => (
                         <SelectItem key={g} value={g}>
                           {g.charAt(0).toUpperCase() + g.slice(1)}
