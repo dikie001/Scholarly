@@ -32,15 +32,15 @@ export default function StudentRegistration() {
   const [formData, setFormData] = useState<addStudentFormTypes>({
     firstName: "",
     lastName: "",
-    dateOfBirth: new Date(),
+    dateOfBirth: undefined,
     gender: "",
-    admissionNumber: null,
+    admissionNumber: undefined,
     grade: "",
     stream: "",
     parentName: "",
     parentEmail: "",
-    parentPhone: null,
-    alternatePhone: null,
+    parentPhone: undefined,
+    alternatePhone: undefined,
     address: "",
     medicalInfo: "",
     previousSchool: "",
@@ -89,7 +89,7 @@ export default function StudentRegistration() {
       "address",
     ];
     const filledFields = requiredFields.filter(
-      (f) => formData[f] !== ""
+      (f) => formData[f] !== "" || undefined
     ).length;
     setCompletionPercentage(
       Math.round((filledFields / requiredFields.length) * 100)
@@ -116,26 +116,28 @@ export default function StudentRegistration() {
     // Validate if first step is complete
     const step1Complete =
       formData.firstName.trim() !== "" && formData.lastName.trim() !== "";
-    !formData.dateOfBirth && formData.gender.trim() !== "";
+    formData.dateOfBirth !== undefined &&
+      formData.gender.trim() !== "" &&
+      formData.residence.trim() !== "";
 
     // Validate if step2 is complete
     const step2Complete =
       formData.grade.trim() !== "" &&
       formData.stream.trim() !== "" &&
-      formData.admissionNumber.trim() !== null &&
-      formData.residence.trim() !== "";
+      formData.admissionNumber !== undefined;
 
     // validat if step 3 is complete
     const step3Complete =
-      formData.parentName !== "" && formData.parentPhone !== null;
+      formData.parentName.trim() !== "" && formData.parentPhone !== undefined;
 
     if (currentStep === 0 && !step1Complete) {
       return toast.error("Fill all fields in this section 1");
     } else if (currentStep === 1 && !step2Complete) {
       return toast.error("Fill all fields in this section 2");
-    } else if (currentStep === 2 && !step3Complete) {
-      return toast.error("Fill all fields in this section 3");
     }
+    //  else if (currentStep === 2 && !step3Complete) {
+    //   return toast.error("Fill all fields in this section 3");
+    // }
 
     currentStep < steps.length - 1 && setCurrentStep((prev) => prev + 1);
   };
@@ -465,7 +467,8 @@ export default function StudentRegistration() {
             {currentStep === steps.length - 1 ? (
               <Button
                 onClick={handleSubmit}
-                className="cursor-pointer"
+                variant="default"
+                className="cursor-pointer text-white"
                 disabled={completionPercentage < 100}
               >
                 Submit

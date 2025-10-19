@@ -60,9 +60,9 @@ const Login = () => {
         .catch((err) => {
           console.log("err----", err);
           if (err.message === "Network Error") {
-            toast.error("Network error, connect to the internet");
+            toast.error("Network error,Please connect to the internet");
             setErrorCounter((prev) => prev + 1);
-            if (errorCounter >= 3) toast.info("Contact admin please");
+            if (errorCounter >= 3) toast.info("Ran into an error, Contact admin please");
           }
         });
     } catch (err) {
@@ -212,9 +212,9 @@ const Login = () => {
                   width={100}
                   className="sm:hidden mx-auto mb-2"
                   alt="padlock"
-                />
+                />  
                 {/* INput form */}
-                <CardContent className="space-y-4  border-2 max-w-md  min-w-80 rounded-xl p-4">
+                <CardContent className="space-y-4 max-sm:mt-4 max-sm:mb-4   border-1 shadow-lg  max-w-md   min-w-80 rounded-xl p-4">
                   <div>
                     <label htmlFor="identifier" className="text-sm font-medium">
                       <TabsContent value="student">
@@ -301,7 +301,7 @@ const Login = () => {
                     <Button
                       onClick={HandeLogin}
                       disabled={credentials.password.length < 2}
-                      className="w-full  cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400  max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
+                      className="w-full text-white  cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400  max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
                     >
                       Login
                     </Button>
@@ -315,7 +315,7 @@ const Login = () => {
                           ? credentials.identifier.length < 6
                           : credentials.identifier.length < 2
                       }
-                      className="w-full hover:scale-102 active:scale-90  cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400  max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
+                      className="w-full text-white/90 hover:scale-102 active:scale-90  cursor-pointer bg-gradient-to-l from-blue-600 to-blue-400  max-w-xs mx-auto flex max-sm:w-60 sm:w-50"
                     >
                       {loading && <LoaderCircle className="animate-spin" />}
                       {loading ? "Authenticating..." : "Authenticate"}
@@ -326,14 +326,14 @@ const Login = () => {
                       Don’t have an account?{" "}
                       <a
                         href="signup"
-                        className="text-blue-800 font-medium hover:underline"
+                        className="text-primary/80 font-medium hover:underline"
                       >
                         Sign up
                       </a>
                     </p>
                     <a
                       href="forgot_password"
-                      className="text-blue-800/70 hover:underline "
+                      className="text-primary/80 text-[13px] hover:underline "
                     >
                       Forgot password?
                     </a>

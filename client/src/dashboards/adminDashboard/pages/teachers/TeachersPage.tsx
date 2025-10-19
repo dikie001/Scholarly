@@ -68,16 +68,16 @@ const TeachersPage = () => {
   ];
 
   return (
-    <div className="flex min-h-screen w-full">
+    <div className="flex min-h-screen w-full flex-wrap">
       <AdminSideBar />
 
-      <div className="flex-1  transition-all duration-300 ease-in-out">
+      <div className="flex-1  transition-all w-full max-w-full duration-300 ease-in-out">
         {/* NAvbar */}
         <Navbar pageName="Teacher Management" />
 
         <div className="p-4">
           {/* Controls */}
-          <div className="flex items-center justify-between max-sm:flex-col max-w-screen w-[95%] mt-4">
+          <div className="flex items-center justify-between max-sm:flex-col max-w-screen  mt-4">
             <div className="relative w-full sm:w-64">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search teachers..." className="pl-9" />
@@ -99,7 +99,7 @@ const TeachersPage = () => {
             </div>
           </div>
           {/* Table */}
-          <Card className="mt-6 max-w-screen w-[95%]">
+          <Card className="mt-6 max-w-screen ">
             <CardHeader>
               <CardTitle>Teacher List</CardTitle>
             </CardHeader>
