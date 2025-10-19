@@ -121,7 +121,7 @@ export default function StudentRegistration() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+                <div className="space-y-2">
                   <Label>First Name *</Label>
                   <Input
                     name="firstName"
@@ -130,7 +130,7 @@ export default function StudentRegistration() {
                     className={inputClass}
                   />
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label>Last Name *</Label>
                   <Input
                     name="lastName"
@@ -139,7 +139,7 @@ export default function StudentRegistration() {
                     className={inputClass}
                   />
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label>Date of Birth *</Label>
                   <Input
                     type="date"
@@ -149,7 +149,7 @@ export default function StudentRegistration() {
                     className={inputClass}
                   />
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label>Gender *</Label>
                   <Select
                     value={formData.gender}
@@ -167,7 +167,7 @@ export default function StudentRegistration() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="md:col-span-2">
+                <div className="md:col-span-2 space-y-2">
                   <Label>Place of Residence *</Label>
                   <Input
                     name="address"
@@ -191,7 +191,7 @@ export default function StudentRegistration() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+                <div className="space-y-2">
                   <Label>Grade *</Label>
                   <Select
                     value={formData.grade}
@@ -212,7 +212,7 @@ export default function StudentRegistration() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label>Stream/Class *</Label>
                   <Select
                     value={formData.stream}
@@ -230,7 +230,7 @@ export default function StudentRegistration() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label>Admission Number *</Label>
                   <Input
                     name="admissionNumber"
@@ -239,8 +239,10 @@ export default function StudentRegistration() {
                     className={inputClass}
                   />
                 </div>
-                <div className="md:col-span-2">
-                  <Label>Previous School (Optional)</Label>
+                <div className="md:col-span-2 space-y-2">
+                  <Label>
+                    Previous School <span className="text-muted-foreground"> (Optional)</span>{" "}
+                  </Label>
                   <Input
                     name="previousSchool"
                     value={formData.previousSchool}
@@ -265,7 +267,7 @@ export default function StudentRegistration() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+                <div className="space-y-2">
                   <Label>Parent/Guardian Name *</Label>
                   <Input
                     name="parentName"
@@ -274,8 +276,8 @@ export default function StudentRegistration() {
                     className={inputClass}
                   />
                 </div>
-                <div>
-                  <Label>Email *</Label>
+                <div className="space-y-2">
+                  <Label>Email <span className="text-muted-foreground">(Optional)</span> </Label>
                   <Input
                     name="parentEmail"
                     type="email"
@@ -284,7 +286,7 @@ export default function StudentRegistration() {
                     className={inputClass}
                   />
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label>Phone *</Label>
                   <Input
                     name="parentPhone"
