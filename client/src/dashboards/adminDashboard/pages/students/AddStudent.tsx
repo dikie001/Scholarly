@@ -25,11 +25,12 @@ import {
 import { User, BookOpen, Users, Circle, Calendar } from "lucide-react";
 import { toast } from "sonner";
 import type { addStudentFormTypes } from "@/types/student.types";
+import { object } from "zod";
 
 export default function StudentRegistration() {
   const [currentStep, setCurrentStep] = useState(0);
   const [completion, setCompletion] = useState(0);
-
+  const STUDENT_FORM_LENGTH = 15;
   const [formData, setFormData] = useState<addStudentFormTypes>({
     firstName: "",
     lastName: "",
@@ -53,7 +54,7 @@ export default function StudentRegistration() {
   const selectClass =
     "bg-background border w-full border-border text-foreground focus:ring-2 focus:ring-primary";
 
-  useEffect(() => calculateProgress(), [formData]);
+  // useEffect(() => calculateProgress(), [formData]);
 
   const calculateProgress = () => {
     const required = [
@@ -68,7 +69,6 @@ export default function StudentRegistration() {
       "parentPhone",
       "address",
     ];
-    
 
     // const filled = required.filter((_,f) => formData[f] !== "" ).length;
     // setCompletion(Math.round((filled / required.length) * 100));
@@ -82,26 +82,46 @@ export default function StudentRegistration() {
     setFormData({ ...formData, [field]: value });
 
   const handleNext = () => {
+    // First Tab input validation
     if (
       currentStep === 0 &&
       (!formData.firstName ||
         !formData.lastName ||
         !formData.dateOfBirth ||
         !formData.gender)
-    )
+    ) {
       return toast.error("Fill all personal info fields");
+    } else {
+      const complete = Math.round((4 / STUDENT_FORM_LENGTH) * 100);
+      setCompletion(complete);
+    }
+
+    // Second Tab input validation
     if (
       currentStep === 1 &&
-      (!formData.grade || !formData.stream || !formData.admissionNumber)
-    )
+      (!formData.grade ||
+        !formData.stream ||
+        formData.admissionNumber !== undefined)
+    ) {
       return toast.error("Fill all academic info fields");
+    } else {
+      const complete = Math.round((8 / STUDENT_FORM_LENGTH) * 100);
+      setCompletion(complete);
+    }
+
+    // Third Tab validation
     if (
       currentStep === 2 &&
       (!formData.parentName || !formData.parentPhone || !formData.address)
-    )
+    ) {
       return toast.error("Fill all parent info fields");
-    currentStep < 3 && setCurrentStep(currentStep + 1);
+    } else {
+      const complete = Math.round((11 / STUDENT_FORM_LENGTH) * 100);
+      setCompletion(complete);
+    }
 
+    // If all is good:
+    currentStep < 3 && setCurrentStep(currentStep + 1);
   };
 
   const handlePrevious = () =>
@@ -356,17 +376,27 @@ export default function StudentRegistration() {
           <div className="flex justify-between gap-4">
             <Button
               variant="outline"
+              className="cursor-pointer"
               onClick={handlePrevious}
               disabled={currentStep === 0}
             >
               Previous
             </Button>
             {currentStep === 3 ? (
-              <Button onClick={handleSubmit} disabled={completion < 100}>
+              <Button
+                className="text-foreground px-6 cursor-pointer"
+                onClick={handleSubmit}
+                disabled={completion < 100}
+              >
                 Submit
               </Button>
             ) : (
-              <Button onClick={handleNext}>Next</Button>
+              <Button
+                className="text-foreground px-6 cursor-pointer"
+                onClick={handleNext}
+              >
+                Next
+              </Button>
             )}
           </div>
         </div>
