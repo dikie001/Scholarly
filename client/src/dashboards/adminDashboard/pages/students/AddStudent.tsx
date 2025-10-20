@@ -92,7 +92,8 @@ export default function StudentRegistration() {
     ) {
       return toast.error("Fill all personal info fields");
     } else {
-      const complete = Math.round((4 / STUDENT_FORM_LENGTH) * 100);
+     const complete = Math.round((4 / STUDENT_FORM_LENGTH) * 100);
+      toast.info(complete)
       setCompletion(complete);
     }
 
