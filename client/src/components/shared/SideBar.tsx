@@ -98,13 +98,23 @@ const navCategories: NavCategory[] = [
         icon: BarChart3,
         href: "/admin/performance",
       },
-      { id: "reports", label: "Reports", icon: FileText, href: "/admin/reports" },
+      {
+        id: "reports",
+        label: "Reports",
+        icon: FileText,
+        href: "/admin/reports",
+      },
     ],
   },
   {
     label: "FINANCE",
     items: [
-      { id: "fees", label: "Fees Management", icon: DollarSign, href: "/admin/fees" },
+      {
+        id: "fees",
+        label: "Fees Management",
+        icon: DollarSign,
+        href: "/admin/fees",
+      },
     ],
   },
   {
@@ -123,7 +133,7 @@ const navCategories: NavCategory[] = [
 
 export const AdminSideBar = () => {
   const pathname = window.location.pathname;
-  const { open } = useSidebar(); 
+  const { open } = useSidebar();
 
   return (
     <Sidebar
@@ -165,7 +175,7 @@ export const AdminSideBar = () => {
                             <SidebarMenuButton asChild isActive={active}>
                               <a
                                 href={item.href}
-                                className="flex items-center gap-2 "
+                                className="flex items-center gap-2"
                               >
                                 <item.icon className="h-5 w-5 " />
                                 {open && <span>{item.label}</span>}
@@ -175,7 +185,7 @@ export const AdminSideBar = () => {
                           {!open && (
                             <TooltipContent
                               side="right"
-                              className="bg-primary "
+                              className="bg-primary text-foreground font-medium"
                             >
                               {item.label}
                             </TooltipContent>
