@@ -24,25 +24,28 @@ import {
 } from "@/components/ui/select";
 import { User, BookOpen, Users, Circle, Calendar } from "lucide-react";
 import { toast } from "sonner";
+import type { addStudentFormTypes } from "@/types/student.types";
 
 export default function StudentRegistration() {
   const [currentStep, setCurrentStep] = useState(0);
   const [completion, setCompletion] = useState(0);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<addStudentFormTypes>({
     firstName: "",
     lastName: "",
-    dateOfBirth: "",
+    dateOfBirth: undefined,
     gender: "",
-    admissionNumber: "",
+    admissionNumber: undefined,
     grade: "",
     stream: "",
     parentName: "",
     parentEmail: "",
-    parentPhone: "",
+    parentPhone: undefined,
+    alternatePhone: undefined,
     address: "",
     medicalInfo: "",
     previousSchool: "",
+    residence: "",
   });
 
   const inputClass =
@@ -65,8 +68,10 @@ export default function StudentRegistration() {
       "parentPhone",
       "address",
     ];
-    const filled = required.filter((f) => formData[f] !== "").length;
-    setCompletion(Math.round((filled / required.length) * 100));
+    
+
+    // const filled = required.filter((_,f) => formData[f] !== "" ).length;
+    // setCompletion(Math.round((filled / required.length) * 100));
   };
 
   const handleChange = (
@@ -96,6 +101,7 @@ export default function StudentRegistration() {
     )
       return toast.error("Fill all parent info fields");
     currentStep < 3 && setCurrentStep(currentStep + 1);
+
   };
 
   const handlePrevious = () =>
@@ -241,7 +247,8 @@ export default function StudentRegistration() {
                 </div>
                 <div className="md:col-span-2 space-y-2">
                   <Label>
-                    Previous School <span className="text-muted-foreground"> (Optional)</span>{" "}
+                    Previous School{" "}
+                    <span className="text-muted-foreground"> (Optional)</span>{" "}
                   </Label>
                   <Input
                     name="previousSchool"
@@ -277,7 +284,10 @@ export default function StudentRegistration() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Email <span className="text-muted-foreground">(Optional)</span> </Label>
+                  <Label>
+                    Email{" "}
+                    <span className="text-muted-foreground">(Optional)</span>{" "}
+                  </Label>
                   <Input
                     name="parentEmail"
                     type="email"
