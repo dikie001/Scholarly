@@ -150,9 +150,17 @@ export const AdminSideBar = () => {
               )}
             </div>
           </SidebarGroupLabel>
-          <SidebarTrigger
-            className={`cursor-e-resize ${open ? "absolute right-4 " : "mt-4"}`}
-          />
+          <Tooltip>
+            <TooltipTrigger
+              className={`${open ? "absolute right-4 " : "mt-4"}`}
+            >
+              {" "}
+              <SidebarTrigger className={`cursor-e-resize `} />
+            </TooltipTrigger>
+            <TooltipContent side={open ? "bottom" : "right"}>
+              {open ? "Close sidebar" : "Open sidebar"}
+            </TooltipContent>
+          </Tooltip>
         </SidebarGroup>
 
         {/* Categories */}
@@ -168,10 +176,13 @@ export const AdminSideBar = () => {
                 <TooltipProvider>
                   {category.items.map((item) => {
                     const active = pathname === item.href;
-                    const showToolTip = !open
+                    const showToolTip = !open;
                     return (
                       <SidebarMenuItem key={item.id}>
-                        <Tooltip delayDuration={0} open= {showToolTip ? undefined: false}>
+                        <Tooltip
+                          delayDuration={0}
+                          open={showToolTip ? undefined : false}
+                        >
                           <TooltipTrigger asChild>
                             <SidebarMenuButton asChild isActive={active}>
                               <a
@@ -205,15 +216,20 @@ export const AdminSideBar = () => {
       <SidebarFooter className="mb-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              isActive={pathname === "/admin/settings"}
-            >
-              <a href="/admin/settings" className="flex items-center gap-2">
-                <Settings className="h-5 w-5" />
-                {open && <span>Settings</span>}
-              </a>
-            </SidebarMenuButton>
+            <Tooltip>
+              <TooltipTrigger>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === "/admin/settings"}
+                >
+                  <a href="/admin/settings" className="flex items-center gap-2">
+                    <Settings className="h-5 w-5" />
+                    {open && <span>Settings</span>}
+                  </a>
+                </SidebarMenuButton>
+              </TooltipTrigger>
+              <TooltipContent side="right">Settings</TooltipContent>
+            </Tooltip>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

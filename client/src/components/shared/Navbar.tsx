@@ -5,6 +5,7 @@ import { Bell, Menu, User } from "lucide-react";
 import React, { useState } from "react";
 import { useSidebar } from "../ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 const Navbar: React.FC<navbarPropTypes> = ({ pageName }) => {
   const { toggleSidebar, setOpen } = useSidebar();
@@ -41,18 +42,31 @@ const Navbar: React.FC<navbarPropTypes> = ({ pageName }) => {
           className="relative rounded-full hover:bg-accent cursor-pointer"
           onClick={() => setShowNotificationModal(true)}
         >
-          <Bell className="h-5 w-5 text-foreground" />
+          {" "}
+          <Tooltip>
+            <TooltipTrigger>
+              <Bell className="h-5 w-5 text-foreground" />
+            </TooltipTrigger>
+            <TooltipContent className="">
+              Notifications
+            </TooltipContent>
+          </Tooltip>
           <span className="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-destructive" />
         </Button>
 
         {/* Profile */}
         <Button
-          variant='secondary'
+          variant="secondary"
           size="icon"
           className="rounded-full bg-primary-foreground cursor-pointer"
           onClick={() => setShowProfileModal(true)}
         >
-          <User className="h-5 w-5" />
+          <Tooltip>
+            <TooltipTrigger>
+              <User className="h-5 w-5" />
+            </TooltipTrigger>
+            <TooltipContent>Profile</TooltipContent>
+          </Tooltip>
         </Button>
       </div>
 
