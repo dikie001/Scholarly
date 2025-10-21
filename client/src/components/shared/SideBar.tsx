@@ -168,9 +168,10 @@ export const AdminSideBar = () => {
                 <TooltipProvider>
                   {category.items.map((item) => {
                     const active = pathname === item.href;
+                    const showToolTip = !open
                     return (
                       <SidebarMenuItem key={item.id}>
-                        <Tooltip>
+                        <Tooltip delayDuration={0} open= {showToolTip ? undefined: false}>
                           <TooltipTrigger asChild>
                             <SidebarMenuButton asChild isActive={active}>
                               <a
