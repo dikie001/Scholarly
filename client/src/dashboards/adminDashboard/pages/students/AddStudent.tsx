@@ -49,6 +49,7 @@ export default function StudentRegistration() {
     stream: "",
     parentName: "",
     parentEmail: "",
+    parentAddress:"",
     parentPhone: undefined,
     alternatePhone: undefined,
     address: "",
@@ -67,9 +68,15 @@ export default function StudentRegistration() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    
+    // Save to residence
     if (name === "location") {
       return setFormData({ ...formData, residence: value });
+    }else if(name === "address"){
+      return setFormData({...formData, parentAddress:value})
     }
+
+    // All the other data inputs
     setFormData({ ...formData, [name]: value });
   };
 
@@ -102,7 +109,7 @@ export default function StudentRegistration() {
 
     if (
       currentStep === 2 &&
-      (!formData.parentName || !formData.parentPhone || !formData.address)
+      (!formData.parentName || !formData.parentPhone )
     )
       return toast.error("Fill all parent info fields");
 
@@ -233,13 +240,13 @@ export default function StudentRegistration() {
                     value={formData.grade}
                     onValueChange={(val) => handleSelectChange("grade", val)}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full cursor-pointer">
                       <SelectValue placeholder="Select grade" />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from(
-                        { length: 6 },
-                        (_, i) => `Grade ${i + 1}`
+                        { length: 4 },
+                        (_, i) => `Grade ${i + 6}`
                       ).map((g) => (
                         <SelectItem key={g} value={g}>
                           {g}
@@ -254,7 +261,7 @@ export default function StudentRegistration() {
                     value={formData.stream}
                     onValueChange={(val) => handleSelectChange("stream", val)}
                   >
-                    <SelectTrigger className='w-full cursor-pointer'>
+                    <SelectTrigger className="w-full cursor-pointer">
                       <SelectValue placeholder="Select stream" />
                     </SelectTrigger>
                     <SelectContent>
@@ -271,6 +278,7 @@ export default function StudentRegistration() {
                   <Input
                     name="admissionNumber"
                     value={formData.admissionNumber}
+                    placeholder="14572"
                     onChange={handleInputChange}
                     className={inputClass}
                   />
@@ -298,6 +306,7 @@ export default function StudentRegistration() {
                   <Input
                     name="parentName"
                     value={formData.parentName}
+                    placeholder="john doe"
                     onChange={handleInputChange}
                     className={inputClass}
                   />
@@ -308,6 +317,7 @@ export default function StudentRegistration() {
                     name="parentEmail"
                     type="email"
                     value={formData.parentEmail}
+                    placeholder="johndoe@gmail.com"
                     onChange={handleInputChange}
                     className={inputClass}
                   />
@@ -317,6 +327,20 @@ export default function StudentRegistration() {
                   <Input
                     name="parentPhone"
                     value={formData.parentPhone}
+                    placeholder="+254712345678"
+                    onChange={handleInputChange}
+                    className={inputClass}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>
+                    Address{" "}
+                    <span className="text-muted-foreground">(Optional)</span>
+                  </Label>
+                  <Input
+                    name="address"
+                    value={formData.parentAddress}
+                    placeholder="PO BOX 12300"
                     onChange={handleInputChange}
                     className={inputClass}
                   />
@@ -409,7 +433,10 @@ export default function StudentRegistration() {
                 Submit
               </Button>
             ) : (
-              <Button className="cursor-pointer text-foreground px-6" onClick={handleNext}>
+              <Button
+                className="cursor-pointer text-foreground px-6"
+                onClick={handleNext}
+              >
                 Next
               </Button>
             )}

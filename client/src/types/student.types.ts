@@ -8,6 +8,7 @@ export type addStudentFormTypes = {
   grade: string,
   stream: string,
   parentName: string,
+  parentAddress:string,
   parentEmail: string,
   parentPhone: number | undefined,
   alternatePhone: number | undefined,
