@@ -1,36 +1,43 @@
 "use client";
 
-import { useState } from "react";
 import Navbar from "@/components/shared/Navbar";
 import { AdminSideBar } from "@/components/shared/SideBar";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import { User, BookOpen, Users, Circle, Calendar } from "lucide-react";
-import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
 import type { addStudentFormTypes } from "@/types/student.types";
+import { BookOpen, Circle, User, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { format } from "date-fns";
+
+import { toast } from "sonner";
 
 export default function StudentRegistration() {
   const [currentStep, setCurrentStep] = useState(0);
   const [completion, setCompletion] = useState(0);
-  const STUDENT_FORM_LENGTH = 15;
   const totalSteps = 4;
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
   const [formData, setFormData] = useState<addStudentFormTypes>({
     firstName: "",
@@ -55,13 +62,28 @@ export default function StudentRegistration() {
   const selectClass =
     "bg-background border w-full border-border text-foreground focus:ring-2 focus:ring-primary";
 
-  const handleChange = (
+  // Handle input change
+  const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  ) => {
+    const { name, value } = e.target;
+    if (name === "location") {
+      return setFormData({ ...formData, residence: value });
+    }
+    setFormData({ ...formData, [name]: value });
+  };
 
+  //
   const handleSelectChange = (field: string, value: string) =>
     setFormData({ ...formData, [field]: value });
 
+  // Fill in date to the formData
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, dateOfBirth: date?.toISOString() }));
+    console.log(formData);
+  }, [date]);
+
+  // Navigate to te next Tab
   const handleNext = () => {
     if (
       currentStep === 0 &&
@@ -86,7 +108,6 @@ export default function StudentRegistration() {
 
     const newStep = currentStep + 1;
     setCurrentStep(newStep);
-    setCompletion(Math.round(((newStep + 1) / totalSteps) * 100));
   };
 
   const handlePrevious = () => {
@@ -129,7 +150,7 @@ export default function StudentRegistration() {
                   <Input
                     name="firstName"
                     value={formData.firstName}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     className={inputClass}
                   />
                 </div>
@@ -138,19 +159,30 @@ export default function StudentRegistration() {
                   <Input
                     name="lastName"
                     value={formData.lastName}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     className={inputClass}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Date of Birth *</Label>
-                  <Input
-                    type="date"
-                    name="dateOfBirth"
-                    value={formData.dateOfBirth}
-                    onChange={handleChange}
-                    className={inputClass}
-                  />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full cursor-pointer justify-start text-left"
+                      >
+                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        captionLayout="dropdown"
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 <div className="space-y-2">
                   <Label>Gender *</Label>
@@ -173,9 +205,9 @@ export default function StudentRegistration() {
                 <div className="md:col-span-2 space-y-2">
                   <Label>Place of Residence *</Label>
                   <Input
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
+                    name="location"
+                    value={formData.residence}
+                    onChange={handleInputChange}
                     className={inputClass}
                   />
                 </div>
@@ -201,12 +233,12 @@ export default function StudentRegistration() {
                     value={formData.grade}
                     onValueChange={(val) => handleSelectChange("grade", val)}
                   >
-                    <SelectTrigger className={selectClass}>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select grade" />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from(
-                        { length: 9 },
+                        { length: 6 },
                         (_, i) => `Grade ${i + 1}`
                       ).map((g) => (
                         <SelectItem key={g} value={g}>
@@ -222,7 +254,7 @@ export default function StudentRegistration() {
                     value={formData.stream}
                     onValueChange={(val) => handleSelectChange("stream", val)}
                   >
-                    <SelectTrigger className={selectClass}>
+                    <SelectTrigger className='w-full cursor-pointer'>
                       <SelectValue placeholder="Select stream" />
                     </SelectTrigger>
                     <SelectContent>
@@ -239,7 +271,7 @@ export default function StudentRegistration() {
                   <Input
                     name="admissionNumber"
                     value={formData.admissionNumber}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     className={inputClass}
                   />
                 </div>
@@ -266,7 +298,7 @@ export default function StudentRegistration() {
                   <Input
                     name="parentName"
                     value={formData.parentName}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     className={inputClass}
                   />
                 </div>
@@ -276,7 +308,7 @@ export default function StudentRegistration() {
                     name="parentEmail"
                     type="email"
                     value={formData.parentEmail}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     className={inputClass}
                   />
                 </div>
@@ -285,7 +317,7 @@ export default function StudentRegistration() {
                   <Input
                     name="parentPhone"
                     value={formData.parentPhone}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     className={inputClass}
                   />
                 </div>
@@ -309,7 +341,7 @@ export default function StudentRegistration() {
               <Textarea
                 name="medicalInfo"
                 value={formData.medicalInfo}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 placeholder="Medical information (optional)"
                 className={inputClass + " min-h-24"}
               />
@@ -357,8 +389,6 @@ export default function StudentRegistration() {
             />
           </div>
 
-  
-
           {renderStepContent()}
 
           <div className="flex justify-between gap-4">
@@ -372,14 +402,14 @@ export default function StudentRegistration() {
             </Button>
             {currentStep === 3 ? (
               <Button
-                className="cursor-pointer px-6"
+                className="cursor-pointer text-foreground px-6"
                 onClick={handleSubmit}
                 disabled={completion < 100}
               >
                 Submit
               </Button>
             ) : (
-              <Button className="cursor-pointer px-6" onClick={handleNext}>
+              <Button className="cursor-pointer text-foreground px-6" onClick={handleNext}>
                 Next
               </Button>
             )}

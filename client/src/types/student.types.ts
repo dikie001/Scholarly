@@ -2,7 +2,7 @@
 export type addStudentFormTypes = {
   firstName: string,
   lastName: string,
-  dateOfBirth: Date | undefined,
+  dateOfBirth: string | undefined,
   gender: "male" | "female" | "other" | "",
   admissionNumber: number | undefined,
   grade: string,
